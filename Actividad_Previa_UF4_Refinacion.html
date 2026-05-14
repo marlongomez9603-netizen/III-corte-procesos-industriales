@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>¿Qué le pasa al petróleo? — Activación Previa UF4</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0a0a0f;
+  --surface:#111118;
+  --surface2:#18181f;
+  --border:rgba(255,255,255,.07);
+  --text:#ededf5;
+  --muted:#7070a0;
+  --accent:#f5a623;
+  --accent2:#e05252;
+  --accent3:#3ecf8e;
+  --accent4:#5b8dee;
+  --radius:14px;
+}
+
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ── SCREENS ── */
+.screen{
+  display:none;
+  min-height:100vh;
+  position:relative;
+  z-index:1;
+}
+.screen.active{display:flex;flex-direction:column;}
+
+/* ══════════════════════════════════════
+   SCREEN 0 — PORTADA
+══════════════════════════════════════ */
+#s0{
+  align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 70% 60% at 60% 40%, rgba(245,166,35,.06) 0%, transparent 70%),
+             radial-gradient(ellipse 50% 40% at 20% 80%, rgba(62,207,142,.04) 0%, transparent 60%),
+             var(--bg);
+  padding:40px 24px;
+  text-align:center;
+}
+
+.portada-label{
+  font-family:'Syne',sans-serif;
+  font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid rgba(245,166,35,.25);
+  display:inline-block;padding:5px 16px;border-radius:50px;
+  margin-bottom:28px;
+}
+
+.portada-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.4rem,7vw,5rem);
+  font-weight:800;line-height:1.05;
+  max-width:700px;
+  margin:0 auto 20px;
+}
+.portada-title .hi{color:var(--accent);}
+
+.portada-sub{
+  color:var(--muted);font-size:1rem;
+  max-width:500px;margin:0 auto 44px;line-height:1.7;
+  font-weight:300;
+}
+
+.btn-primary{
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:1rem;letter-spacing:.05em;
+  background:var(--accent);color:#0a0a0f;
+  border:none;border-radius:50px;
+  padding:16px 44px;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 0 40px rgba(245,166,35,.2);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,166,35,.35);}
+
+.portada-meta{
+  margin-top:48px;
+  font-size:.8rem;color:rgba(255,255,255,.15);
+  letter-spacing:.05em;
+}
+
+/* ══════════════════════════════════════
+   SCREEN 1 — PREGUNTA DETONADORA
+══════════════════════════════════════ */
+#s1{
+  padding:0;
+}
+
+.s1-hero{
+  background:linear-gradient(135deg,#0a0a0f 40%, rgba(224,82,82,.06));
+  border-bottom:1px solid var(--border);
+  padding:56px 40px 48px;
+  text-align:center;
+}
+
+.step-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Syne',sans-serif;font-size:.68rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  padding:5px 14px;border-radius:50px;color:var(--muted);
+  margin-bottom:20px;
+}
+.step-num{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--accent);color:#0a0a0f;
+  font-size:.65rem;font-weight:800;font-family:'Syne',sans-serif;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.s1-hero h2{
+  font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3.5vw,2.6rem);
+  font-weight:800;margin-bottom:12px;max-width:650px;margin-left:auto;margin-right:auto;
+}
+.s1-hero p{color:var(--muted);font-size:.95rem;max-width:520px;margin:0 auto;line-height:1.7;}
+
+.s1-body{
+  flex:1;display:flex;align-items:stretch;
+  gap:0;max-width:1100px;margin:0 auto;width:100%;padding:40px 32px;
+  flex-wrap:wrap;
+}
+
+/* Barril izquierda */
+.barril-panel{
+  flex:0 0 260px;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:20px;padding:0 24px 0 0;
+}
+
+.barril-svg-wrap{
+  position:relative;
+}
+.barril-label{
+  font-family:'Syne',sans-serif;font-size:.75rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);text-align:center;margin-top:10px;
+}
+.api-badge{
+  background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);
+  border-radius:8px;padding:10px 14px;text-align:center;width:100%;
+}
+.api-badge .val{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent);}
+.api-badge .lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+
+/* Flecha */
+.arrow-col{
+  flex:0 0 60px;display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:var(--muted);
+}
+
+/* Productos derecha */
+.productos-panel{
+  flex:1;min-width:280px;
+}
+.productos-panel h3{
+  font-family:'Syne',sans-serif;font-size:.75rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;
+}
+
+.prod-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;
+}
+
+.prod-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:14px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  transition:border-color .2s,transform .2s;
+}
+.prod-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px);}
+.prod-card .icon{font-size:1.8rem;}
+.prod-card .name{font-size:.82rem;font-weight:500;text-align:center;line-height:1.3;}
+.prod-card .hint{font-size:.7rem;color:var(--muted);text-align:center;}
+
+/* Pregunta central */
+.pregunta-box{
+  max-width:1100px;margin:0 auto;padding:0 32px 40px;
+}
+.pregunta-card{
+  background:linear-gradient(135deg,rgba(245,166,35,.05),rgba(245,166,35,.02));
+  border:1px solid rgba(245,166,35,.2);border-radius:var(--radius);
+  padding:28px 28px;
+}
+.pregunta-card h3{
+  font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;
+  color:var(--accent);margin-bottom:12px;
+}
+.pregunta-card p{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:20px;}
+
+textarea{
+  width:100%;background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:.9rem;padding:14px 16px;resize:vertical;min-height:110px;
+  outline:none;transition:border-color .2s;line-height:1.6;
+}
+textarea:focus{border-color:rgba(245,166,35,.4);}
+textarea::placeholder{color:var(--muted);}
+
+.btn-row{display:flex;justify-content:flex-end;margin-top:16px;}
+
+.btn-next{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  background:var(--accent);color:#0a0a0f;border:none;
+  border-radius:50px;padding:13px 36px;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(245,166,35,.3);}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ══════════════════════════════════════
+   SCREEN 2 — TRABAJO EN PAREJAS
+══════════════════════════════════════ */
+#s2{padding:0;}
+
+.s2-hero{
+  background:linear-gradient(135deg,#0a0a0f 40%, rgba(62,207,142,.05));
+  border-bottom:1px solid var(--border);
+  padding:56px 40px 48px;text-align:center;
+}
+.s2-hero h2{
+  font-family:'Syne',sans-serif;font-size:clamp(1.4rem,3vw,2.3rem);
+  font-weight:800;margin-bottom:12px;max-width:600px;margin-left:auto;margin-right:auto;
+}
+.s2-hero p{color:var(--muted);font-size:.95rem;max-width:500px;margin:0 auto;line-height:1.7;}
+
+.s2-body{
+  flex:1;max-width:900px;margin:0 auto;padding:40px 32px;width:100%;
+}
+
+.instrucciones{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;margin-bottom:32px;
+}
+
+.ins-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;
+}
+.ins-card .ic-num{
+  font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  color:var(--accent3);margin-bottom:8px;
+}
+.ins-card .ic-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:6px;}
+.ins-card .ic-text{font-size:.83rem;color:var(--muted);line-height:1.65;}
+
+.diagrama-area{
+  background:var(--surface);border:1px dashed rgba(255,255,255,.12);
+  border-radius:var(--radius);padding:24px;margin-bottom:24px;
+}
+.diagrama-area label{
+  font-family:'Syne',sans-serif;font-size:.72rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:12px;
+}
+
+.pasos-wrap{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  margin-bottom:16px;
+}
+.paso-input{
+  flex:1;min-width:130px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:.85rem;padding:10px 12px;outline:none;
+  transition:border-color .2s;
+}
+.paso-input:focus{border-color:rgba(62,207,142,.4);}
+.paso-input::placeholder{color:var(--muted);}
+.paso-arrow{color:var(--muted);font-size:1.2rem;flex-shrink:0;}
+
+.pregunta-conflicto{
+  background:linear-gradient(135deg,rgba(224,82,82,.06),rgba(224,82,82,.02));
+  border:1px solid rgba(224,82,82,.25);border-radius:var(--radius);
+  padding:24px;margin-bottom:28px;
+}
+.pregunta-conflicto .tag{
+  font-family:'Syne',sans-serif;font-size:.68rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--accent2);margin-bottom:10px;display:block;
+}
+.pregunta-conflicto h3{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:8px;
+}
+.pregunta-conflicto p{font-size:.88rem;color:var(--muted);line-height:1.7;}
+.dato-highlight{
+  display:inline-block;
+  background:rgba(224,82,82,.12);border:1px solid rgba(224,82,82,.25);
+  color:var(--text);border-radius:6px;padding:2px 8px;font-weight:500;
+}
+
+/* ══════════════════════════════════════
+   SCREEN 3 — CONFLICTO COGNITIVO
+══════════════════════════════════════ */
+#s3{
+  padding:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 30%, rgba(224,82,82,.05) 0%, transparent 70%), var(--bg);
+}
+
+.s3-hero{
+  padding:60px 40px 40px;text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.s3-hero h2{
+  font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3.5vw,2.6rem);
+  font-weight:800;margin-bottom:12px;
+}
+.s3-hero p{color:var(--muted);font-size:.95rem;max-width:520px;margin:0 auto;line-height:1.7;}
+
+.s3-body{
+  flex:1;max-width:960px;margin:0 auto;padding:40px 32px;width:100%;
+}
+
+.reveal-sequence{
+  display:flex;flex-direction:column;gap:16px;margin-bottom:36px;
+}
+
+.reveal-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  transition:border-color .3s;
+}
+.reveal-card.revealed{border-color:rgba(245,166,35,.3);}
+
+.reveal-header{
+  display:flex;align-items:center;gap:14px;padding:18px 20px;
+  cursor:pointer;user-select:none;
+}
+.reveal-header:hover{background:rgba(255,255,255,.02);}
+.reveal-icon{font-size:1.4rem;flex-shrink:0;}
+.reveal-q{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;flex:1;}
+.reveal-toggle{
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;color:var(--muted);flex-shrink:0;
+  transition:transform .3s,background .2s;
+}
+.reveal-card.open .reveal-toggle{transform:rotate(45deg);background:var(--accent);color:#0a0a0f;border-color:var(--accent);}
+
+.reveal-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1);
+}
+.reveal-card.open .reveal-body{max-height:400px;}
+.reveal-content{
+  padding:0 20px 20px;border-top:1px solid var(--border);
+  padding-top:16px;
+}
+.reveal-content p{font-size:.88rem;color:var(--muted);line-height:1.75;}
+.reveal-content strong{color:var(--text);}
+.reveal-content .dato{
+  display:inline-block;
+  background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.2);
+  color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;
+  border-radius:6px;padding:2px 10px;font-size:.85rem;
+}
+
+.conflicto-final{
+  background:linear-gradient(135deg,rgba(224,82,82,.08),rgba(245,166,35,.04));
+  border:1px solid rgba(224,82,82,.3);border-radius:var(--radius);
+  padding:28px;text-align:center;margin-bottom:32px;
+}
+.conflicto-final .emoji{font-size:2rem;margin-bottom:10px;}
+.conflicto-final h3{
+  font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;
+  color:var(--accent);margin-bottom:8px;
+}
+.conflicto-final p{
+  font-size:.9rem;color:var(--muted);line-height:1.7;max-width:600px;margin:0 auto;
+}
+
+/* ══════════════════════════════════════
+   SCREEN 4 — CIERRE Y PUENTE
+══════════════════════════════════════ */
+#s4{
+  align-items:center;justify-content:center;text-align:center;
+  padding:60px 32px;
+  background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(62,207,142,.05) 0%, transparent 70%), var(--bg);
+}
+
+.cierre-icon{font-size:3rem;margin-bottom:20px;}
+.cierre-title{
+  font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,3rem);
+  font-weight:800;margin-bottom:16px;max-width:620px;
+}
+.cierre-title .green{color:var(--accent3);}
+.cierre-sub{
+  color:var(--muted);font-size:1rem;line-height:1.8;
+  max-width:520px;margin:0 auto 40px;
+}
+
+.lo-que-vienen{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;max-width:720px;margin:0 auto 44px;
+}
+.lq-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:16px 12px;
+}
+.lq-item .lq-icon{font-size:1.4rem;margin-bottom:6px;}
+.lq-item .lq-name{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;margin-bottom:3px;}
+.lq-item .lq-cat{font-size:.7rem;color:var(--muted);}
+
+.lq-item.sep{border-top:2px solid var(--accent);}
+.lq-item.conv{border-top:2px solid var(--accent2);}
+.lq-item.trat{border-top:2px solid var(--accent3);}
+
+.cierre-cta{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;
+  background:var(--accent3);color:#0a0a0f;
+  border:none;border-radius:50px;padding:16px 44px;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 0 40px rgba(62,207,142,.15);
+}
+.cierre-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(62,207,142,.3);}
+
+.unipaz-footer{
+  margin-top:40px;font-size:.75rem;color:rgba(255,255,255,.15);
+  letter-spacing:.05em;
+}
+
+/* ══════════════════════════════════════
+   PROGRESS BAR GLOBAL
+══════════════════════════════════════ */
+.progress-bar{
+  position:fixed;top:0;left:0;right:0;height:3px;z-index:100;
+  background:rgba(255,255,255,.05);
+}
+.progress-fill{
+  height:100%;background:var(--accent);
+  transition:width .4s cubic-bezier(.4,0,.2,1);
+}
+
+/* ══════════════════════════════════════
+   NAVEGACIÓN FLOTANTE
+══════════════════════════════════════ */
+.nav-float{
+  position:fixed;bottom:28px;right:28px;z-index:100;
+  display:flex;gap:10px;
+}
+.nav-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--muted);font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s,transform .2s;
+}
+.nav-btn:hover{background:var(--surface);color:var(--text);transform:scale(1.08);}
+.nav-btn:disabled{opacity:.2;cursor:not-allowed;transform:none;}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:680px){
+  .s1-body{flex-direction:column;padding:24px 16px;}
+  .barril-panel{flex:none;width:100%;flex-direction:row;justify-content:center;gap:24px;padding:0;}
+  .arrow-col{transform:rotate(90deg);margin:0 auto;}
+  .s1-hero,.s2-hero,.s3-hero{padding:40px 20px 32px;}
+  .s2-body,.s3-body,.pregunta-box{padding:24px 16px;}
+  .pasos-wrap{gap:4px;}
+  .paso-input{min-width:100px;font-size:.78rem;}
+  .nav-float{bottom:16px;right:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<!-- ══ NAV FLOTANTE ══ -->
+<div class="nav-float">
+  <button class="nav-btn" id="btnBack" onclick="navBack()" disabled title="Anterior">←</button>
+  <button class="nav-btn" id="btnFwd"  onclick="navFwd()"  title="Siguiente">→</button>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 0 — PORTADA
+════════════════════════════════════ -->
+<section class="screen active" id="s0">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;">
+    <span class="portada-label">Procesos Industriales I — UF4 · Semana 8</span>
+    <h1 class="portada-title">¿Qué le pasa <br>al <span class="hi">petróleo</span>?</h1>
+    <p class="portada-sub">Antes de ver la presentación, vamos a explorar lo que ya sabemos — y lo que aún no.</p>
+    <button class="btn-primary" onclick="goTo(1)">Comenzar actividad →</button>
+    <p class="portada-meta">UNIPAZ · Ingeniería Electromecánica · Esp. Marlon Gomez</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SCREEN 1 — PREGUNTA DETONADORA
+════════════════════════════════════ -->
+<section class="screen" id="s1">
+  <div class="s1-hero">
+    <div class="step-pill"><span class="step-num">1</span>Pregunta detonadora</div>
+    <h2>Un barril de crudo... y todo esto</h2>
+    <p>Del lado izquierdo, petróleo crudo. Del lado derecho, productos que usamos todos los días. ¿Cómo se llega de uno al otro?</p>
+  </div>
+
+  <div class="s1-body">
+    <!-- Barril -->
+    <div class="barril-panel">
+      <div class="barril-svg-wrap">
+        <svg width="110" height="150" viewBox="0 0 110 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cuerpo del barril -->
+          <rect x="15" y="30" width="80" height="95" rx="8" fill="#1a1008" stroke="#f5a623" stroke-width="1.5"/>
+          <!-- Tapas -->
+          <ellipse cx="55" cy="30" rx="40" ry="10" fill="#2a1a0a" stroke="#f5a623" stroke-width="1.5"/>
+          <ellipse cx="55" cy="125" rx="40" ry="10" fill="#2a1a0a" stroke="#f5a623" stroke-width="1.5"/>
+          <!-- Aros -->
+          <rect x="15" y="55" width="80" height="6" rx="2" fill="#f5a623" opacity=".4"/>
+          <rect x="15" y="93" width="80" height="6" rx="2" fill="#f5a623" opacity=".4"/>
+          <!-- Líquido -->
+          <rect x="16" y="80" width="78" height="44" rx="0" fill="#8B4513" opacity=".5"/>
+          <!-- Texto -->
+          <text x="55" y="72" text-anchor="middle" font-family="Syne" font-size="11" font-weight="800" fill="#f5a623">CRUDO</text>
+          <text x="55" y="85" text-anchor="middle" font-family="Syne" font-size="9" fill="#a0702a">COLOMBIANO</text>
+        </svg>
+      </div>
+      <div class="api-badge">
+        <div class="val">22° API</div>
+        <div class="lbl">Crudo mediano-pesado</div>
+      </div>
+      <div style="font-size:.78rem;color:var(--muted);text-align:center;line-height:1.6;">Mezcla de miles de<br>moléculas de hidrocarburo</div>
+    </div>
+
+    <!-- Flecha -->
+    <div class="arrow-col">→</div>
+
+    <!-- Productos -->
+    <div class="productos-panel">
+      <h3>Productos que obtenemos</h3>
+      <div class="prod-grid">
+        <div class="prod-card"><div class="icon">⛽</div><div class="name">Gasolina</div><div class="hint">Auto / moto</div></div>
+        <div class="prod-card"><div class="icon">🚛</div><div class="name">Diésel</div><div class="hint">Camiones / buses</div></div>
+        <div class="prod-card"><div class="icon">✈️</div><div class="name">Jet fuel</div><div class="hint">Aviación</div></div>
+        <div class="prod-card"><div class="icon">🔥</div><div class="name">GLP</div><div class="hint">Gas doméstico</div></div>
+        <div class="prod-card"><div class="icon">🛣️</div><div class="name">Asfalto</div><div class="hint">Carreteras</div></div>
+        <div class="prod-card"><div class="icon">🧴</div><div class="name">Plásticos</div><div class="hint">Petroquímica</div></div>
+        <div class="prod-card"><div class="icon">💊</div><div class="name">Fármacos</div><div class="hint">Benceno → medicamentos</div></div>
+        <div class="prod-card"><div class="icon">🌱</div><div class="name">Fertilizantes</div><div class="hint">Azufre → ácido sulfúrico</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pregunta-box">
+    <div class="pregunta-card">
+      <h3>✏️ Tu turno — escribe tu modelo mental</h3>
+      <p>Sin buscar nada, sin consultar. ¿Cómo crees que se transforma el petróleo crudo para obtener todos esos productos? Describe el camino con tus propias palabras. No hay respuesta incorrecta — lo que importa es lo que ya tienes en la cabeza.</p>
+      <textarea id="modeloMental" placeholder="Ej: Creo que primero se calienta, luego se separa por temperatura... y para hacer gasolina pienso que..."></textarea>
+      <div class="btn-row">
+        <button class="btn-next" id="btnS1Next" onclick="goTo(2)" disabled>Continuar →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SCREEN 2 — TRABAJO EN PAREJAS
+════════════════════════════════════ -->
+<section class="screen" id="s2">
+  <div class="s2-hero">
+    <div class="step-pill"><span class="step-num" style="background:var(--accent3);color:#0a0a0f">2</span>Trabajo en parejas</div>
+    <h2>Construye el camino del crudo</h2>
+    <p>Ahora con tu compañero/a, elaboren juntos un modelo de los pasos que creen que ocurren en una refinería.</p>
+  </div>
+
+  <div class="s2-body">
+    <div class="instrucciones">
+      <div class="ins-card">
+        <div class="ic-num">01</div>
+        <div class="ic-title">Comparen</div>
+        <div class="ic-text">Lean las respuestas individuales. ¿En qué coincidieron? ¿En qué difieren?</div>
+      </div>
+      <div class="ins-card">
+        <div class="ic-num">02</div>
+        <div class="ic-title">Secuencien</div>
+        <div class="ic-text">Ordenen los pasos que creen que ocurren, desde el crudo hasta los productos finales.</div>
+      </div>
+      <div class="ins-card">
+        <div class="ic-num">03</div>
+        <div class="ic-title">Justifiquen</div>
+        <div class="ic-text">¿Por qué ese orden? ¿Qué principio físico o químico guía cada paso?</div>
+      </div>
+    </div>
+
+    <div class="diagrama-area">
+      <label>Secuencia de pasos — Crudo → Productos (completen las casillas)</label>
+      <div class="pasos-wrap" id="pasosWrap">
+        <input class="paso-input" placeholder="Paso 1..." id="p1">
+        <span class="paso-arrow">→</span>
+        <input class="paso-input" placeholder="Paso 2..." id="p2">
+        <span class="paso-arrow">→</span>
+        <input class="paso-input" placeholder="Paso 3..." id="p3">
+        <span class="paso-arrow">→</span>
+        <input class="paso-input" placeholder="Paso 4..." id="p4">
+        <span class="paso-arrow">→</span>
+        <input class="paso-input" placeholder="Productos" id="p5" style="border-color:rgba(62,207,142,.3);">
+      </div>
+    </div>
+
+    <div class="pregunta-conflicto">
+      <span class="tag">⚡ Pregunta de conflicto cognitivo</span>
+      <h3>Ahora un dato que complica las cosas:</h3>
+      <p>El crudo colombiano de Barrancabermeja tiene <span class="dato-highlight">22° API</span> — eso significa que es mediano-pesado. Si solo lo destilaran (separaran por temperatura), <span class="dato-highlight">hasta el 50% quedaría como residuo sin valor comercial</span>.<br><br>
+      💭 <strong>¿Qué habría que hacerle a ese residuo para no desperdiciarlo?</strong> Escriban su hipótesis:</p>
+      <textarea id="hipotesis" placeholder="Nuestra hipótesis: creemos que el residuo se podría..." style="margin-top:16px;min-height:80px;"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-next" onclick="goTo(3)" style="background:var(--accent3);">Ver la revelación →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SCREEN 3 — CONFLICTO + REVELACIÓN
+════════════════════════════════════ -->
+<section class="screen" id="s3">
+  <div class="s3-hero">
+    <div class="step-pill"><span class="step-num" style="background:var(--accent2);color:#fff">3</span>Revelación progresiva</div>
+    <h2>¿Estaban cerca?</h2>
+    <p>Abran cada tarjeta en orden. Comparen con su hipótesis antes de ver la siguiente.</p>
+  </div>
+
+  <div class="s3-body">
+    <div class="reveal-sequence">
+
+      <div class="reveal-card" id="rc1">
+        <div class="reveal-header" onclick="toggleReveal('rc1')">
+          <span class="reveal-icon">🔀</span>
+          <span class="reveal-q">¿Cómo se separan las moléculas del crudo?</span>
+          <span class="reveal-toggle">+</span>
+        </div>
+        <div class="reveal-body"><div class="reveal-content">
+          <p>El crudo se calienta a <strong>370°C</strong> y entra a una <strong>torre de destilación de 50 metros</strong>. Los hidrocarburos se vaporizan y suben. Cada molécula se condensa a una altura distinta según su punto de ebullición: los más ligeros (gases, nafta) en el tope; los más pesados (diésel, residuo) en el fondo.<br><br>
+          Esto se llama <strong>destilación fraccionada</strong> — y <span class="dato">no hay ninguna reacción química</span>, solo separación física.</p>
+        </div></div>
+      </div>
+
+      <div class="reveal-card" id="rc2">
+        <div class="reveal-header" onclick="toggleReveal('rc2')">
+          <span class="reveal-icon">⚠️</span>
+          <span class="reveal-q">El problema: queda demasiado residuo</span>
+          <span class="reveal-toggle">+</span>
+        </div>
+        <div class="reveal-body"><div class="reveal-content">
+          <p>Con crudo pesado colombiano (22° API), después de la destilación queda un <span class="dato">40–50% de residuo atmosférico</span>: moléculas enormes que no se evaporaron. Si se vende como asfalto, tiene muy poco valor.<br><br>
+          La refinería necesita <strong>transformar esas moléculas grandes en productos livianos</strong> de alto valor como gasolina y diésel. Aquí entran los procesos de <strong>conversión</strong>.</p>
+        </div></div>
+      </div>
+
+      <div class="reveal-card" id="rc3">
+        <div class="reveal-header" onclick="toggleReveal('rc3')">
+          <span class="reveal-icon">⚡</span>
+          <span class="reveal-q">La solución: romper moléculas (Cracking)</span>
+          <span class="reveal-toggle">+</span>
+        </div>
+        <div class="reveal-body"><div class="reveal-content">
+          <p>El residuo primero va a una <strong>torre de vacío</strong> para recuperar los gasóleos pesados sin que se dañen. Luego esos gasóleos entran al <strong>FCC (Cracking Catalítico Fluidizado)</strong> — donde un catalizador zeolítico a <span class="dato">530°C</span> <em>rompe</em> las moléculas grandes en moléculas pequeñas de gasolina.<br><br>
+          La reacción dura <strong>2 a 4 segundos</strong>. Un barril de residuo pesado se convierte en gasolina que vale el <strong>doble</strong>.</p>
+        </div></div>
+      </div>
+
+      <div class="reveal-card" id="rc4">
+        <div class="reveal-header" onclick="toggleReveal('rc4')">
+          <span class="reveal-icon">🧹</span>
+          <span class="reveal-q">Y el azufre... ¿a dónde va?</span>
+          <span class="reveal-toggle">+</span>
+        </div>
+        <div class="reveal-body"><div class="reveal-content">
+          <p>El crudo colombiano tiene azufre. Si no se elimina, contamina los combustibles y daña motores. El <strong>hidrotratamiento (HDS)</strong> usa hidrógeno a alta presión para arrancar el azufre y convertirlo en <span class="dato">H₂S</span> gaseoso.<br><br>
+          Ese H₂S tóxico no se desecha: va al <strong>Proceso Claus</strong>, donde se convierte en <strong>azufre sólido puro (99.9%)</strong> que se vende para hacer fertilizantes y ácido sulfúrico. <em>Nada se desperdicia.</em></p>
+        </div></div>
+      </div>
+
+      <div class="reveal-card" id="rc5">
+        <div class="reveal-header" onclick="toggleReveal('rc5')">
+          <span class="reveal-icon">🔗</span>
+          <span class="reveal-q">El sistema completo: todo está conectado</span>
+          <span class="reveal-toggle">+</span>
+        </div>
+        <div class="reveal-body"><div class="reveal-content">
+          <p>Una refinería no es una secuencia lineal — es un <strong>sistema integrado</strong>. La salida de cada proceso es la entrada del siguiente:<br><br>
+          <strong>CDU</strong> → residuo → <strong>VDU</strong> → gasóleo → <strong>FCC / Hydrocracker</strong> → gasolina / diésel → <strong>HDS</strong> → combustible limpio → mercado.<br><br>
+          El hidrógeno que necesita el HDS lo produce el <strong>Reformado Catalítico</strong>. El azufre que sale del HDS lo recupera el <strong>Proceso Claus</strong>. Son <span class="dato">10 procesos en 3 categorías</span> — y eso es exactamente lo que veremos hoy.</p>
+        </div></div>
+      </div>
+
+    </div>
+
+    <div class="conflicto-final">
+      <div class="emoji">🎯</div>
+      <h3>Su modelo era más cercano de lo que creen</h3>
+      <p>Intuitivamente ya sabían que había separación, transformación y limpieza. Lo que vamos a ver en la presentación son los nombres técnicos, las condiciones exactas y por qué cada proceso opera como opera — con la lógica de la GRB de Barrancabermeja de fondo.</p>
+    </div>
+
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn-next" onclick="goTo(4)" style="background:var(--accent3);box-shadow:0 0 40px rgba(62,207,142,.15);">Listo para la presentación →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SCREEN 4 — CIERRE
+════════════════════════════════════ -->
+<section class="screen" id="s4">
+  <div class="cierre-icon">🏭</div>
+  <h2 class="cierre-title">Ahora sí, <span class="green">tienen preguntas propias</span></h2>
+  <p class="cierre-sub">
+    Mientras ven la presentación, mantengan en mente su hipótesis y las preguntas que les surgieron. La mejor forma de aprender es buscar confirmación — o contradicción — a lo que ya pensaron.
+  </p>
+
+  <div style="font-family:'Syne',sans-serif;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Van a encontrar respuestas sobre estos 10 procesos</div>
+
+  <div class="lo-que-vienen">
+    <div class="lq-item sep"><div class="lq-icon">🔀</div><div class="lq-name">CDU</div><div class="lq-cat">Separación</div></div>
+    <div class="lq-item sep"><div class="lq-icon">🔀</div><div class="lq-name">VDU</div><div class="lq-cat">Separación</div></div>
+    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">FCC</div><div class="lq-cat">Conversión</div></div>
+    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Hydrocracking</div><div class="lq-cat">Conversión</div></div>
+    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Reformado</div><div class="lq-cat">Conversión</div></div>
+    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Alquilación</div><div class="lq-cat">Conversión</div></div>
+    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Isomerización</div><div class="lq-cat">Conversión</div></div>
+    <div class="lq-item trat"><div class="lq-icon">🧹</div><div class="lq-name">HDS / HDN</div><div class="lq-cat">Tratamiento</div></div>
+    <div class="lq-item trat"><div class="lq-icon">🧹</div><div class="lq-name">Coking</div><div class="lq-cat">Tratamiento</div></div>
+    <div class="lq-item trat"><div class="lq-icon">🧹</div><div class="lq-name">Claus</div><div class="lq-cat">Tratamiento</div></div>
+  </div>
+
+  <button class="cierre-cta" onclick="window.open('Presentacion_UF4_Procesos_Refinacion.html','_blank')">
+    Abrir la presentación UF4 →
+  </button>
+
+  <p class="unipaz-footer">UNIPAZ · Ingeniería Electromecánica · Procesos Industriales I · 2026-1 · Esp. Marlon Gomez</p>
+</section>
+
+<script>
+let current = 0;
+const total = 5;
+
+function goTo(n){
+  document.getElementById('s'+current).classList.remove('active');
+  current = n;
+  document.getElementById('s'+current).classList.add('active');
+  updateUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function navBack(){ if(current>0) goTo(current-1); }
+function navFwd(){  if(current<total-1) goTo(current+1); }
+
+function updateUI(){
+  document.getElementById('progressFill').style.width = ((current/(total-1))*100)+'%';
+  document.getElementById('btnBack').disabled = current===0;
+  document.getElementById('btnFwd').disabled  = current===total-1;
+}
+
+// Habilitar botón S1 cuando escriben algo
+document.getElementById('modeloMental').addEventListener('input', function(){
+  document.getElementById('btnS1Next').disabled = this.value.trim().length < 10;
+});
+
+// Toggle revelar tarjetas
+function toggleReveal(id){
+  const card = document.getElementById(id);
+  const isOpen = card.classList.contains('open');
+  card.classList.toggle('open', !isOpen);
+  card.classList.toggle('revealed', true);
+}
+
+updateUI();
+</script>
+</body>
+</html>
