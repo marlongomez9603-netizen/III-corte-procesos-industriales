@@ -218,6 +218,26 @@ textarea{
 textarea:focus{border-color:rgba(245,166,35,.4);}
 textarea::placeholder{color:var(--muted);}
 
+/* ── FORM ENVÍO ── */
+.form-wrap{max-width:700px;margin:0 auto;width:100%;}
+.form-section{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:16px;}
+.form-section h3{font-family:'Syne',sans-serif;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:540px){.form-grid{grid-template-columns:1fr;}}
+.field-label{display:block;font-size:.75rem;font-weight:500;color:var(--muted);margin-bottom:6px;letter-spacing:.05em;}
+.field-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;padding:11px 14px;outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:rgba(245,166,35,.45);}
+.field-input::placeholder{color:var(--muted);}
+.field-hint{font-size:.78rem;color:var(--muted);margin-bottom:8px;line-height:1.5;}
+.btn-submit{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;background:var(--accent);color:#0a0a0f;border:none;border-radius:50px;padding:15px 44px;cursor:pointer;transition:transform .2s,box-shadow .2s;width:100%;margin-top:6px;}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,166,35,.35);}
+.btn-submit:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none;}
+.msg-ok{display:none;background:rgba(62,207,142,.08);border:1px solid rgba(62,207,142,.3);border-radius:var(--radius);padding:32px;text-align:center;margin-top:16px;}
+.msg-ok .ok-icon{font-size:2.4rem;margin-bottom:10px;}
+.msg-ok h3{font-family:'Syne',sans-serif;color:var(--accent3);font-size:1.1rem;margin-bottom:6px;}
+.msg-ok p{font-size:.88rem;color:var(--muted);}
+.msg-err{display:none;background:rgba(224,82,82,.08);border:1px solid rgba(224,82,82,.3);border-radius:var(--radius);padding:20px;text-align:center;margin-top:12px;font-size:.88rem;color:#e05252;}
+
 .btn-row{display:flex;justify-content:flex-end;margin-top:16px;}
 
 .btn-next{
@@ -723,36 +743,63 @@ textarea::placeholder{color:var(--muted);}
 <!-- ════════════════════════════════════
      SCREEN 4 — CIERRE
 ════════════════════════════════════ -->
-<section class="screen" id="s4">
-  <div class="cierre-icon">🏭</div>
-  <h2 class="cierre-title">Ahora sí, <span class="green">tienen preguntas propias</span></h2>
-  <p class="cierre-sub">
-    Mientras ven la presentación, mantengan en mente su hipótesis y las preguntas que les surgieron. La mejor forma de aprender es buscar confirmación — o contradicción — a lo que ya pensaron.
-  </p>
+<section class="screen" id="s4" style="padding:50px 24px;">
+  <div class="cierre-icon">📤</div>
+  <h2 class="cierre-title" style="font-size:clamp(1.4rem,3.5vw,2.2rem);margin-bottom:12px;">Envía tus <span class="green">respuestas</span></h2>
+  <p class="cierre-sub" style="margin-bottom:36px;">Registra tu nombre y lo que escribiste. Una vez enviado quedará guardado.</p>
 
-  <div style="font-family:'Syne',sans-serif;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Van a encontrar respuestas sobre estos 10 procesos</div>
+  <div class="form-wrap">
+    <form id="actividadForm">
 
-  <div class="lo-que-vienen">
-    <div class="lq-item sep"><div class="lq-icon">🔀</div><div class="lq-name">CDU</div><div class="lq-cat">Separación</div></div>
-    <div class="lq-item sep"><div class="lq-icon">🔀</div><div class="lq-name">VDU</div><div class="lq-cat">Separación</div></div>
-    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">FCC</div><div class="lq-cat">Conversión</div></div>
-    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Hydrocracking</div><div class="lq-cat">Conversión</div></div>
-    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Reformado</div><div class="lq-cat">Conversión</div></div>
-    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Alquilación</div><div class="lq-cat">Conversión</div></div>
-    <div class="lq-item conv"><div class="lq-icon">⚡</div><div class="lq-name">Isomerización</div><div class="lq-cat">Conversión</div></div>
-    <div class="lq-item trat"><div class="lq-icon">🧹</div><div class="lq-name">HDS / HDN</div><div class="lq-cat">Tratamiento</div></div>
-    <div class="lq-item trat"><div class="lq-icon">🧹</div><div class="lq-name">Coking</div><div class="lq-cat">Tratamiento</div></div>
-    <div class="lq-item trat"><div class="lq-icon">🧹</div><div class="lq-name">Claus</div><div class="lq-cat">Tratamiento</div></div>
+      <div class="form-section">
+        <h3>Identificación</h3>
+        <div class="form-grid">
+          <div>
+            <label class="field-label" for="inNombre">Nombre completo *</label>
+            <input class="field-input" id="inNombre" type="text" required placeholder="Tu nombre y apellido">
+          </div>
+          <div>
+            <label class="field-label" for="inCodigo">Código estudiantil *</label>
+            <input class="field-input" id="inCodigo" type="text" required placeholder="Ej: 20231234">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Pregunta 1 — Modelo mental</h3>
+        <p class="field-hint">¿Cómo crees que se transforma el petróleo crudo en todos esos productos?</p>
+        <textarea id="inModelo" required rows="4" placeholder="Tu respuesta de la pantalla 1..."></textarea>
+      </div>
+
+      <div class="form-section">
+        <h3>Pregunta 2 — Hipótesis sobre el residuo</h3>
+        <p class="field-hint">¿Qué habría que hacerle al 50% de residuo del crudo pesado para no desperdiciarlo?</p>
+        <textarea id="inHipotesis" required rows="4" placeholder="Tu hipótesis de la pantalla 2..."></textarea>
+      </div>
+
+      <div class="form-section">
+        <h3>Preguntas propias <span style="font-weight:400;text-transform:none;font-family:'DM Sans';color:var(--muted);font-size:.8rem;letter-spacing:0">(opcional)</span></h3>
+        <p class="field-hint">¿Qué preguntas te surgieron durante la actividad?</p>
+        <textarea id="inPreguntas" rows="3" placeholder="Escribe tus dudas o curiosidades..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="btnSubmit">📤 Enviar respuestas</button>
+    </form>
+
+    <div class="msg-ok" id="msgOk">
+      <div class="ok-icon">✅</div>
+      <h3>¡Respuestas registradas!</h3>
+      <p>Tus respuestas quedaron guardadas. ¡Gracias!</p>
+    </div>
+    <div class="msg-err" id="msgErr">❌ Error al enviar. Verifica tu conexión e intenta de nuevo.</div>
   </div>
 
-  <button class="cierre-cta" onclick="window.open('Presentacion_UF4_Procesos_Refinacion.html','_blank')">
-    Abrir la presentación UF4 →
-  </button>
-
-  <p class="unipaz-footer">UNIPAZ · Ingeniería Electromecánica · Procesos Industriales I · 2026-1 · Esp. Marlon Gomez</p>
+  <p class="unipaz-footer" style="margin-top:40px;">UNIPAZ · Ingeniería Electromecánica · Procesos Industriales I · 2026-1 · Esp. Marlon Gomez</p>
 </section>
 
 <script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLS9nJSIMR3nnZJo0Y3-wzygSkWtfi5u_L6lypc6Hdzmy7qlpc4z9jUgvTIy1d4BXe_Q/exec';
+
 let current = 0;
 const total = 5;
 
@@ -762,6 +809,13 @@ function goTo(n){
   document.getElementById('s'+current).classList.add('active');
   updateUI();
   window.scrollTo({top:0,behavior:'smooth'});
+  // Pre-llenar los textareas del formulario con lo que escribieron antes
+  if(n === 4){
+    var m = document.getElementById('modeloMental').value.trim();
+    var h = document.getElementById('hipotesis').value.trim();
+    if(m) document.getElementById('inModelo').value = m;
+    if(h) document.getElementById('inHipotesis').value = h;
+  }
 }
 
 function navBack(){ if(current>0) goTo(current-1); }
@@ -785,6 +839,37 @@ function toggleReveal(id){
   card.classList.toggle('open', !isOpen);
   card.classList.toggle('revealed', true);
 }
+
+// Envío a Google Sheets
+document.getElementById('actividadForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('btnSubmit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  const payload = {
+    nombre:    document.getElementById('inNombre').value.trim(),
+    codigo:    document.getElementById('inCodigo').value.trim(),
+    modelo:    document.getElementById('inModelo').value.trim(),
+    hipotesis: document.getElementById('inHipotesis').value.trim(),
+    preguntas: document.getElementById('inPreguntas').value.trim()
+  };
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('actividadForm').style.display = 'none';
+    document.getElementById('msgOk').style.display = 'block';
+  } catch(err) {
+    document.getElementById('msgErr').style.display = 'block';
+    btn.textContent = '📤 Enviar respuestas';
+    btn.disabled = false;
+  }
+});
 
 updateUI();
 </script>
