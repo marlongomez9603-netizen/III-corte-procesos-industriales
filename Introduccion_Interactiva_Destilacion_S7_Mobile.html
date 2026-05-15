@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0e27">
+<title>De Crudo a Producto · Introducción Interactiva · Semana 7 · UNIPAZ</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg-1: #0a0e27;
+    --bg-2: #1a1f4a;
+    --bg-3: #2a1a4a;
+    --primary: #FFD93D;
+    --orange: #FF6B35;
+    --green: #06D6A0;
+    --red: #EF476F;
+    --blue: #118AB2;
+    --gray: #3a4565;
+    --gray-light: #5a6585;
+    --text: #ffffff;
+    --text-dim: #b8c1d9;
+    --shadow: 0 10px 40px rgba(0,0,0,0.5);
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  html, body {
+    min-height: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(ellipse at top, var(--bg-3), var(--bg-2) 40%, var(--bg-1));
+    background-attachment: fixed;
+    color: var(--text);
+    min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .screen {
+    display: none;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: calc(20px + var(--safe-top)) 16px calc(20px + var(--safe-bottom));
+    width: 100%;
+    animation: fadeIn 0.4s ease;
+  }
+  .screen.active {
+    display: flex;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    background: rgba(255,217,61,0.15);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.75rem;
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+  .step-badge .num {
+    background: var(--primary);
+    color: #1a1a1a;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 900;
+  }
+
+  h1.big-title {
+    font-size: 1.7rem;
+    line-height: 1.15;
+    background: linear-gradient(135deg, var(--primary), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+
+  .btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, filter 0.15s;
+    font-family: inherit;
+    color: white;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    -webkit-touch-callout: none;
+  }
+  .btn:active { transform: scale(0.97); filter: brightness(1.1); }
+  .btn-primary { background: linear-gradient(135deg, var(--primary), var(--orange)); color: #1a1a1a; }
+  .btn-green { background: linear-gradient(135deg, var(--green), #048862); }
+  .btn-blue { background: linear-gradient(135deg, var(--blue), #0d6a8c); }
+  .btn-neutral { background: linear-gradient(135deg, var(--gray-light), var(--gray)); }
+  .btn-ghost { background: transparent; border: 2px solid var(--text-dim); color: var(--text-dim); }
+
+  /* ============================================================
+     PANTALLA 0 — TÍTULO
+     ============================================================ */
+  #screen-0 {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  #screen-0 .badge {
+    display: inline-block;
+    background: rgba(255,217,61,0.15);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.7rem;
+  }
+  #screen-0 h1 {
+    font-size: 2.4rem;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--primary), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  #screen-0 .subtitle {
+    font-size: 1rem;
+    padding: 0 4px;
+  }
+  #screen-0 .actions {
+    margin-top: 24px;
+    width: 100%;
+    max-width: 320px;
+  }
+  #screen-0 .actions .btn { width: 100%; padding: 18px; font-size: 1.1rem; }
+  #screen-0 .meta {
+    margin-top: 32px;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding: 0 8px;
+  }
+
+  /* ============================================================
+     PANTALLA 1 — HOOK MOSAICO
+     ============================================================ */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 8px 0 16px;
+  }
+
+  .product-card {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 6px;
+    transition: all 0.4s ease;
+    min-height: 90px;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-card .emoji { font-size: 1.8rem; line-height: 1; }
+  .product-card .name { font-size: 0.7rem; color: var(--text); text-align: center; font-weight: 600; line-height: 1.1; }
+
+  .product-card.revealed {
+    background: linear-gradient(135deg, rgba(255,217,61,0.2), rgba(255,107,53,0.1));
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(255,217,61,0.3);
+  }
+  .product-card.revealed .from {
+    font-size: 0.6rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .reveal-banner {
+    background: linear-gradient(135deg, rgba(255,217,61,0.2), rgba(255,107,53,0.1));
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-top: 12px;
+    text-align: center;
+    animation: glow 0.6s ease;
+  }
+  @keyframes glow {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .reveal-banner h3 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .reveal-banner p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .footer-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+  .footer-bar .btn { width: 100%; }
+  .footer-bar .btn-row { display: flex; gap: 8px; }
+  .footer-bar .btn-row .btn { flex: 1; }
+
+  /* ============================================================
+     PANTALLA 2 — RETO TORRE
+     ============================================================ */
+  #screen-2 .game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* TORRE */
+  .tower-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .tower-title {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+
+  .tower {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg,
+      rgba(120, 180, 230, 0.10) 0%,
+      rgba(120, 180, 230, 0.08) 25%,
+      rgba(255, 200, 120, 0.10) 50%,
+      rgba(220, 110, 70, 0.10) 75%,
+      rgba(80, 30, 30, 0.18) 100%);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 16px 16px 8px 8px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 18px;
+  }
+
+  .tower::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 22px;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-bottom: none;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .zone {
+    border-bottom: 1px dashed rgba(255,255,255,0.2);
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    min-height: 60px;
+    position: relative;
+  }
+  .zone:last-child { border-bottom: none; }
+
+  .zone .zone-label {
+    flex: 0 0 70px;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    line-height: 1.15;
+  }
+  .zone .zone-label .temp {
+    color: var(--primary);
+    font-weight: 700;
+    display: block;
+    font-size: 0.7rem;
+  }
+
+  .zone .zone-slot {
+    flex: 1;
+    min-height: 44px;
+    border: 2px dashed rgba(255,255,255,0.25);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    transition: all 0.2s;
+    padding: 4px 6px;
+    text-align: center;
+  }
+  .zone .zone-slot:empty::before {
+    content: 'Toca aquí';
+    font-size: 0.7rem;
+  }
+  .zone.zone-target .zone-slot {
+    border-color: var(--primary);
+    background: rgba(255,217,61,0.2);
+    color: var(--primary);
+    animation: pulse 0.8s ease infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .zone.filled .zone-slot {
+    border-style: solid;
+    border-color: rgba(255,255,255,0.3);
+  }
+  .zone.correct .zone-slot {
+    border-color: var(--green);
+    background: rgba(6,214,160,0.15);
+  }
+  .zone.wrong .zone-slot {
+    border-color: var(--red);
+    background: rgba(239,71,111,0.15);
+    animation: shake 0.4s;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  /* PRODUCTOS / POOL */
+  .pool-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .pool-title {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+  .pool-instructions {
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid var(--primary);
+    padding: 10px 12px;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 12px;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  .pool-instructions strong { color: var(--primary); }
+
+  .pool {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 2px;
+  }
+
+  .product-tile, .zone-slot .product-tile {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 10px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    min-height: 50px;
+  }
+  .product-tile:active { transform: scale(0.97); }
+  .product-tile.selected {
+    border-color: var(--primary);
+    background: rgba(255,217,61,0.2);
+    box-shadow: 0 0 16px rgba(255,217,61,0.4);
+    transform: scale(1.02);
+  }
+  .product-tile .emoji { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+  .product-tile .label { font-weight: 600; font-size: 0.8rem; flex: 1; line-height: 1.1; }
+
+  .zone-slot .product-tile {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(255,217,61,0.2), rgba(255,107,53,0.1));
+    border-color: var(--primary);
+    padding: 6px 8px;
+    min-height: 36px;
+  }
+  .zone-slot .product-tile .emoji { font-size: 1.2rem; }
+  .zone-slot .product-tile .label { font-size: 0.75rem; }
+
+  .game-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .game-actions .btn { flex: 1; padding: 12px 8px; font-size: 0.9rem; }
+
+  /* Sticky tap hint for mobile */
+  .tap-hint {
+    position: fixed;
+    bottom: calc(20px + var(--safe-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,217,61,0.95);
+    color: #1a1a1a;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    z-index: 200;
+    animation: bounce 1.2s ease infinite;
+    pointer-events: none;
+    max-width: 90vw;
+    text-align: center;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  /* ============================================================
+     PANTALLA 3 — REVEAL
+     ============================================================ */
+  #screen-3 .reveal-area {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info-panel {
+    width: 100%;
+  }
+
+  .info-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+  .info-card.highlight {
+    border-color: var(--primary);
+    background: rgba(255,217,61,0.08);
+    box-shadow: 0 0 20px rgba(255,217,61,0.2);
+  }
+  .info-card h3 {
+    color: var(--primary);
+    font-size: 1rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .info-card h3 .emoji { font-size: 1.3rem; }
+  .info-card h3 .temp-tag {
+    margin-left: auto;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+  .info-card p { color: var(--text-dim); line-height: 1.45; font-size: 0.85rem; }
+  .info-card .uses { margin-top: 8px; }
+  .info-card .uses span {
+    display: inline-block;
+    background: rgba(17,138,178,0.2);
+    color: #6dc3e0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    margin: 2px 3px 2px 0;
+    border: 1px solid rgba(17,138,178,0.4);
+  }
+
+  .key-takeaways {
+    background: linear-gradient(135deg, rgba(255,217,61,0.1), rgba(255,107,53,0.05));
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .key-takeaways h3 {
+    color: var(--primary);
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  .key-takeaways ul { list-style: none; }
+  .key-takeaways li {
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    color: var(--text);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    display: flex;
+    gap: 10px;
+  }
+  .key-takeaways li:last-child { border-bottom: none; }
+  .key-takeaways li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 900;
+    flex: 0 0 16px;
+  }
+
+  /* Indicador de progreso (top) */
+  .progress {
+    position: fixed;
+    top: calc(12px + var(--safe-top));
+    right: 16px;
+    display: flex;
+    gap: 6px;
+    z-index: 100;
+  }
+  .progress .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.3s;
+  }
+  .progress .dot.active { background: var(--primary); transform: scale(1.4); }
+  .progress .dot.done { background: var(--green); }
+
+  .hidden { display: none !important; }
+
+  /* Toast de feedback */
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(10,14,39,0.97);
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    z-index: 1000;
+    max-width: 90vw;
+    text-align: center;
+    animation: toastIn 0.3s ease;
+  }
+  .toast.success { border-color: var(--green); }
+  .toast.error { border-color: var(--red); }
+  .toast h4 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .toast.success h4 { color: var(--green); }
+  .toast.error h4 { color: var(--red); }
+  .toast p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.4; margin-bottom: 14px; }
+  .toast .btn { padding: 10px 20px; font-size: 0.9rem; min-height: 40px; }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  .toast-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    animation: fadeIn 0.2s ease;
+  }
+
+  /* Landscape phones / tablets pequeñas */
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .mosaic {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .product-card .emoji { font-size: 2.2rem; }
+    .product-card .name { font-size: 0.8rem; }
+    h1.big-title { font-size: 2rem; }
+    #screen-0 h1 { font-size: 3rem; }
+    .pool { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Tablets / desktop: usar layout original */
+  @media (min-width: 1024px) {
+    .screen {
+      padding: 32px 48px;
+      min-height: 100vh;
+    }
+    .step-badge { margin-top: 0; font-size: 0.95rem; padding: 8px 20px; }
+    .step-badge .num { width: 28px; height: 28px; font-size: 0.9rem; }
+    h1.big-title { font-size: clamp(2.4rem, 5vw, 4.5rem); margin-bottom: 12px; }
+    .subtitle { font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 32px; }
+
+    #screen-0 h1 { font-size: clamp(3rem, 7vw, 6rem); }
+    #screen-0 .badge { padding: 10px 28px; font-size: 0.95rem; letter-spacing: 3px; }
+    #screen-0 .actions { max-width: none; }
+    #screen-0 .actions .btn { width: auto; padding: 16px 32px; font-size: 1.2rem; }
+
+    .mosaic {
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .product-card { min-height: 0; }
+    .product-card .emoji { font-size: clamp(40px, 6vh, 72px); }
+    .product-card .name { font-size: clamp(0.85rem, 1.1vw, 1.05rem); }
+    .product-card.revealed .from { font-size: 0.8rem; letter-spacing: 1px; margin-top: 4px; }
+
+    .reveal-banner { padding: 20px 32px; border-width: 3px; border-radius: 20px; }
+    .reveal-banner h3 { font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+    .reveal-banner p { font-size: clamp(1rem, 1.4vw, 1.3rem); }
+
+    .footer-bar {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bar .btn { width: auto; }
+    .footer-bar .btn-row { display: contents; }
+
+    #screen-2 .game-area {
+      display: grid;
+      grid-template-columns: minmax(360px, 480px) 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .tower-title, .pool-title { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 12px; }
+    .tower { border-width: 3px; border-radius: 24px 24px 12px 12px; max-width: 460px; margin-top: 22px; }
+    .tower::before { top: -22px; width: 60px; height: 30px; border-width: 3px; border-radius: 30px 30px 0 0; }
+    .zone { padding: 8px 14px; gap: 12px; min-height: 0; flex: 1; }
+    .zone .zone-label { flex: 0 0 100px; font-size: 0.85rem; }
+    .zone .zone-label .temp { font-size: 0.85rem; }
+    .zone .zone-slot { min-height: 50px; height: 100%; }
+
+    .pool-instructions { padding: 12px 18px; font-size: 1rem; }
+    .product-tile { padding: 10px 14px; }
+    .product-tile .emoji { font-size: 1.8rem; }
+    .product-tile .label { font-size: 0.95rem; }
+
+    #screen-3 .reveal-area {
+      display: grid;
+      grid-template-columns: minmax(360px, 480px) 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+    .info-card { padding: 18px 22px; border-radius: 16px; }
+    .info-card h3 { font-size: 1.2rem; }
+    .info-card h3 .emoji { font-size: 1.6rem; }
+    .info-card p { font-size: 0.98rem; }
+    .key-takeaways { padding: 20px 24px; border-radius: 20px; }
+    .key-takeaways h3 { font-size: 1.3rem; }
+    .key-takeaways li { font-size: 1rem; padding: 8px 0; }
+
+    .progress { top: 24px; right: 32px; gap: 8px; }
+    .progress .dot { width: 12px; height: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Indicador de progreso -->
+<div class="progress">
+  <div class="dot" id="dot-0"></div>
+  <div class="dot" id="dot-1"></div>
+  <div class="dot" id="dot-2"></div>
+  <div class="dot" id="dot-3"></div>
+</div>
+
+<!-- ============================================================
+     PANTALLA 0 — TÍTULO
+     ============================================================ -->
+<section class="screen active" id="screen-0">
+  <div class="badge">Semana 7 · Procesos Industriales 1 · UNIPAZ</div>
+  <h1>De crudo a producto</h1>
+  <p class="subtitle">¿Cómo es posible que un mismo barril nos dé gasolina, asfalto, combustible de avión, vaselina y plásticos?</p>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="goTo(1)">▶ COMENZAR</button>
+  </div>
+  <div class="meta">Introducción interactiva — UF4: Destilación y Refinación del Petróleo</div>
+</section>
+
+<!-- ============================================================
+     PANTALLA 1 — MOSAICO HOOK
+     ============================================================ -->
+<section class="screen" id="screen-1">
+  <div class="step-badge"><span class="num">1</span> El gancho</div>
+  <h1 class="big-title">¿Qué tienen en común estos 12 productos?</h1>
+  <p class="subtitle">Mira con atención. Tienen algo en común que probablemente nunca habías pensado.</p>
+
+  <div class="mosaic" id="mosaic"></div>
+
+  <div class="reveal-banner hidden" id="revealBanner">
+    <h3>🛢️ TODOS salen del mismo barril de petróleo</h3>
+    <p>...y se separan en una sola torre. Esa es la magia de la <strong>destilación fraccionada</strong>.</p>
+  </div>
+
+  <div class="footer-bar">
+    <button class="btn btn-primary" id="revealBtn" onclick="revealMosaic()">💡 Revelar respuesta</button>
+    <button class="btn btn-green hidden" id="toChallengeBtn" onclick="goTo(2)">Aceptar el reto →</button>
+    <button class="btn btn-ghost" onclick="goTo(0)">← Atrás</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     PANTALLA 2 — RETO TORRE (tap & place)
+     ============================================================ -->
+<section class="screen" id="screen-2">
+  <div class="step-badge"><span class="num">2</span> El reto</div>
+  <h1 class="big-title">¿Dónde sale cada producto?</h1>
+
+  <div class="game-area">
+    <!-- Pool de productos (primero en móvil) -->
+    <div class="pool-wrap">
+      <div class="pool-title">🛢️ Productos a ubicar</div>
+      <div class="pool-instructions">
+        <strong>Toca</strong> un producto y luego <strong>toca el nivel</strong> en la torre. Pista: los livianos suben, los pesados bajan.
+      </div>
+      <div class="pool" id="pool"></div>
+    </div>
+
+    <!-- Torre -->
+    <div class="tower-wrap">
+      <div class="tower-title">🗼 Torre de destilación</div>
+      <div class="tower" id="tower"></div>
+    </div>
+
+    <div class="game-actions">
+      <button class="btn btn-ghost" onclick="resetTower()">↻ Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkTower()">✓ Comprobar</button>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <button class="btn btn-green hidden" id="toRevealBtn" onclick="goTo(3)">Ver torre real →</button>
+    <button class="btn btn-ghost" onclick="goTo(1)">← Atrás</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     PANTALLA 3 — REVEAL FINAL
+     ============================================================ -->
+<section class="screen" id="screen-3">
+  <div class="step-badge"><span class="num">3</span> El descubrimiento</div>
+  <h1 class="big-title">La torre de destilación atmosférica</h1>
+  <p class="subtitle">Esto es lo que pasa adentro. Cada producto sale a su temperatura de ebullición. <em style="color:var(--primary)">Toca cada nivel</em> para ver detalles.</p>
+
+  <div class="reveal-area">
+    <div class="tower-wrap">
+      <div class="tower-title">🗼 Torre real (con datos)</div>
+      <div class="tower" id="towerFinal"></div>
+    </div>
+
+    <div class="info-panel" id="infoPanel"></div>
+  </div>
+
+  <div class="footer-bar">
+    <button class="btn btn-primary" onclick="alert('¡Listo para entrar a la teoría! Abre la presentación principal de la Semana 7.')">📚 Entrar a la teoría →</button>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goTo(2)">← Atrás</button>
+      <button class="btn btn-neutral" onclick="restartAll()">↻ Inicio</button>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   DATOS — Mosaico de productos
+   ============================================================ */
+const MOSAIC = [
+  { emoji: '⛽', name: 'Gasolina',          from: 'Nafta liviana' },
+  { emoji: '🛍️', name: 'Bolsa plástica',    from: 'Nafta → polietileno' },
+  { emoji: '💄', name: 'Vaselina',          from: 'Aceites pesados' },
+  { emoji: '🛣️', name: 'Asfalto',           from: 'Residuo de fondo' },
+  { emoji: '🕯️', name: 'Vela parafina',     from: 'Cera pesada' },
+  { emoji: '💊', name: 'Medicamentos',      from: 'Aromáticos' },
+  { emoji: '👕', name: 'Ropa sintética',    from: 'Petroquímicos' },
+  { emoji: '✈️', name: 'Jet fuel',          from: 'Queroseno' },
+  { emoji: '🛞', name: 'Llantas',           from: 'Caucho sintético' },
+  { emoji: '🧴', name: 'Detergente',        from: 'Tensoactivos' },
+  { emoji: '🖍️', name: 'Crayones',          from: 'Parafina' },
+  { emoji: '🚛', name: 'Diesel',            from: 'Gasóleo medio' }
+];
+
+/* ============================================================
+   DATOS — Productos y zonas de la torre
+   ============================================================ */
+const ZONES = [
+  { id:'glp',        label:'Tope',          temp:'< 30°C',     correct:'glp',        emoji:'🔥', name:'Gases / GLP',       desc:'Mezcla de metano, etano, propano y butano. Como pesan tan poco, salen primero por el tope de la torre.', uses:['Gas doméstico','Encendedores','Cocinas industriales'] },
+  { id:'gasolina',   label:'Sec. alta',     temp:'30 – 90°C',  correct:'gasolina',   emoji:'⛽', name:'Gasolina',          desc:'Nafta liviana. Combustible para motores de combustión interna de vehículos.', uses:['Vehículos','Pequeños motores','Solvente'] },
+  { id:'nafta',      label:'',              temp:'90 – 200°C', correct:'nafta',      emoji:'🧪', name:'Nafta pesada',      desc:'Materia prima principal de la petroquímica: con ella se hacen plásticos, pinturas, fibras sintéticas.', uses:['Petroquímica','Solventes','Reformado'] },
+  { id:'queroseno',  label:'',              temp:'200 – 275°C',correct:'queroseno',  emoji:'✈️', name:'Queroseno (Jet A1)',desc:'Combustible de motores de turbina de aviación. También se usa en estufas en zonas remotas.', uses:['Aviación','Estufas','Militar'] },
+  { id:'diesel',     label:'',              temp:'275 – 350°C',correct:'diesel',     emoji:'🚛', name:'Diesel',            desc:'Combustible de motores diesel: camiones, buses, tractores, generadores. El de mayor consumo industrial.', uses:['Camiones','Maquinaria','Generadores'] },
+  { id:'gasoleo',    label:'',              temp:'350 – 425°C',correct:'gasoleo',    emoji:'🏭', name:'Gasóleo pesado',    desc:'Alimentación del cracking catalítico (FCC). También se usa como fuel oil industrial en calderas y barcos.', uses:['Cracking FCC','Calderas','Barcos'] },
+  { id:'lubricantes',label:'',              temp:'425 – 500°C',correct:'lubricantes',emoji:'🛢️', name:'Aceites y ceras',    desc:'Aceites lubricantes, vaselina, parafina para velas y crayones. Salen casi al fondo de la torre.', uses:['Aceite motor','Vaselina','Parafina'] },
+  { id:'asfalto',    label:'Fondo',         temp:'> 500°C',    correct:'asfalto',    emoji:'🛣️', name:'Residuo / Asfalto', desc:'Lo que no se evapora. Se usa para pavimentar carreteras, techar y producir coque de petróleo.', uses:['Pavimento','Techos','Coque'] }
+];
+
+/* Productos a ubicar — versión sin orden, mezclados */
+const PRODUCTS = [
+  { id:'asfalto',     emoji:'🛣️', label:'Asfalto'       },
+  { id:'gasolina',    emoji:'⛽', label:'Gasolina'      },
+  { id:'queroseno',   emoji:'✈️', label:'Queroseno'     },
+  { id:'glp',         emoji:'🔥', label:'GLP / Gases'   },
+  { id:'lubricantes', emoji:'🛢️', label:'Aceites/Ceras' },
+  { id:'diesel',      emoji:'🚛', label:'Diesel'        },
+  { id:'nafta',       emoji:'🧪', label:'Nafta pesada'  },
+  { id:'gasoleo',     emoji:'🏭', label:'Gasóleo pes.'}
+];
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+let currentScreen = 0;
+let placedProducts = {}; // zoneId -> productId
+let selectedProduct = null;
+
+/* ============================================================
+   NAVEGACIÓN
+   ============================================================ */
+function goTo(n){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('screen-' + n);
+  target.classList.add('active');
+  currentScreen = n;
+  updateProgress();
+  // Scroll al inicio en cada cambio de pantalla
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (n === 1) renderMosaic();
+  if (n === 2) renderTowerChallenge();
+  if (n === 3) renderReveal();
+}
+
+function updateProgress(){
+  for (let i=0; i<=3; i++){
+    const dot = document.getElementById('dot-' + i);
+    dot.classList.remove('active','done');
+    if (i < currentScreen) dot.classList.add('done');
+    else if (i === currentScreen) dot.classList.add('active');
+  }
+}
+
+/* ============================================================
+   PANTALLA 1 — MOSAICO
+   ============================================================ */
+let mosaicRevealed = false;
+function renderMosaic(){
+  const el = document.getElementById('mosaic');
+  el.innerHTML = '';
+  MOSAIC.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.dataset.idx = i;
+    card.innerHTML = `<div class="emoji">${p.emoji}</div><div class="name">${p.name}</div>`;
+    el.appendChild(card);
+  });
+  // reset estado
+  mosaicRevealed = false;
+  document.getElementById('revealBanner').classList.add('hidden');
+  document.getElementById('revealBtn').classList.remove('hidden');
+  document.getElementById('toChallengeBtn').classList.add('hidden');
+}
+
+function revealMosaic(){
+  if (mosaicRevealed) return;
+  mosaicRevealed = true;
+  const cards = document.querySelectorAll('#mosaic .product-card');
+  cards.forEach((c, i) => {
+    setTimeout(()=>{
+      c.classList.add('revealed');
+      const p = MOSAIC[i];
+      const fromEl = document.createElement('div');
+      fromEl.className = 'from';
+      fromEl.textContent = p.from;
+      c.appendChild(fromEl);
+    }, i * 80);
+  });
+  setTimeout(()=>{
+    document.getElementById('revealBanner').classList.remove('hidden');
+    document.getElementById('revealBtn').classList.add('hidden');
+    document.getElementById('toChallengeBtn').classList.remove('hidden');
+    // Scroll para mostrar el banner
+    setTimeout(()=> {
+      document.getElementById('revealBanner').scrollIntoView({behavior:'smooth', block:'center'});
+    }, 100);
+  }, MOSAIC.length * 80 + 200);
+}
+
+/* ============================================================
+   PANTALLA 2 — RETO TORRE (TAP TO PLACE - optimized for touch)
+   ============================================================ */
+function renderTowerChallenge(){
+  const tower = document.getElementById('tower');
+  tower.innerHTML = '';
+  ZONES.forEach(z => {
+    const div = document.createElement('div');
+    div.className = 'zone';
+    div.dataset.zone = z.id;
+    div.dataset.correct = z.correct;
+    div.innerHTML = `
+      <div class="zone-label">${z.label?z.label+'<br>':''}<span class="temp">${z.temp}</span></div>
+      <div class="zone-slot" data-zone="${z.id}"></div>
+    `;
+    setupZoneEvents(div);
+    tower.appendChild(div);
+  });
+
+  // Pool: barajar productos
+  const pool = document.getElementById('pool');
+  pool.innerHTML = '';
+  const shuffled = [...PRODUCTS].sort(()=> Math.random() - 0.5);
+  shuffled.forEach(p => {
+    const tile = createProductTile(p);
+    pool.appendChild(tile);
+  });
+
+  placedProducts = {};
+  selectedProduct = null;
+  document.getElementById('toRevealBtn').classList.add('hidden');
+  removeTapHint();
+}
+
+function createProductTile(p){
+  const tile = document.createElement('div');
+  tile.className = 'product-tile';
+  tile.dataset.product = p.id;
+  tile.innerHTML = `<div class="emoji">${p.emoji}</div><div class="label">${p.label}</div>`;
+
+  // Tap-to-select para móvil (también funciona en desktop)
+  tile.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    if (selectedProduct === p.id){
+      // Deseleccionar
+      selectedProduct = null;
+      tile.classList.remove('selected');
+      removeTapHint();
+      clearZoneHighlights();
+    } else {
+      // Seleccionar nuevo
+      document.querySelectorAll('.product-tile.selected').forEach(t=> t.classList.remove('selected'));
+      selectedProduct = p.id;
+      tile.classList.add('selected');
+      showTapHint(`👆 Ahora toca el nivel de la torre donde va "${p.label}"`);
+      highlightAvailableZones();
+    }
+  });
+
+  return tile;
+}
+
+function setupZoneEvents(zoneEl){
+  zoneEl.addEventListener('click', ()=>{
+    if (selectedProduct) {
+      placeProduct(zoneEl, selectedProduct);
+      const placedId = selectedProduct;
+      selectedProduct = null;
+      document.querySelectorAll('.product-tile.selected').forEach(t=> t.classList.remove('selected'));
+      removeTapHint();
+      clearZoneHighlights();
+    } else {
+      // Si la zona ya tiene un producto, permitir "tomarlo"
+      const zoneId = zoneEl.dataset.zone;
+      if (placedProducts[zoneId]) {
+        const productId = placedProducts[zoneId];
+        const product = PRODUCTS.find(p => p.id === productId);
+        // Devolver al pool
+        delete placedProducts[zoneId];
+        zoneEl.classList.remove('filled','correct','wrong');
+        zoneEl.querySelector('.zone-slot').innerHTML = '';
+        const newTile = createProductTile(product);
+        document.getElementById('pool').appendChild(newTile);
+      }
+    }
+  });
+}
+
+function placeProduct(zoneEl, productId){
+  const zoneId = zoneEl.dataset.zone;
+  const slot = zoneEl.querySelector('.zone-slot');
+
+  // si la zona ya tenía algo, devolverlo al pool
+  if (placedProducts[zoneId]){
+    const oldId = placedProducts[zoneId];
+    const oldP = PRODUCTS.find(x=>x.id===oldId);
+    if (oldP){
+      const tile = createProductTile(oldP);
+      document.getElementById('pool').appendChild(tile);
+    }
+  }
+
+  // si el producto estaba en otra zona, limpiarla
+  for (const z in placedProducts){
+    if (placedProducts[z] === productId){
+      delete placedProducts[z];
+      const otherZone = document.querySelector(`.zone[data-zone="${z}"]`);
+      if (otherZone){
+        otherZone.classList.remove('filled','correct','wrong');
+        otherZone.querySelector('.zone-slot').innerHTML = '';
+      }
+    }
+  }
+
+  // Si el producto estaba en el pool, removerlo
+  const poolTile = document.querySelector(`#pool .product-tile[data-product="${productId}"]`);
+  if (poolTile) poolTile.remove();
+
+  // Colocar
+  const product = PRODUCTS.find(p => p.id === productId);
+  slot.innerHTML = '';
+  const placed = createProductTile(product);
+  // El tile dentro del slot no debe mantener selección
+  placed.classList.remove('selected');
+  slot.appendChild(placed);
+  zoneEl.classList.add('filled');
+  zoneEl.classList.remove('correct','wrong');
+  placedProducts[zoneId] = productId;
+}
+
+function highlightAvailableZones() {
+  document.querySelectorAll('.zone').forEach(z => {
+    z.classList.add('zone-target');
+  });
+}
+
+function clearZoneHighlights() {
+  document.querySelectorAll('.zone.zone-target').forEach(z => {
+    z.classList.remove('zone-target');
+  });
+}
+
+function showTapHint(msg) {
+  removeTapHint();
+  const hint = document.createElement('div');
+  hint.className = 'tap-hint';
+  hint.id = 'tapHint';
+  hint.textContent = msg;
+  document.body.appendChild(hint);
+}
+
+function removeTapHint() {
+  const hint = document.getElementById('tapHint');
+  if (hint) hint.remove();
+}
+
+function checkTower(){
+  let allCorrect = true;
+  let placedCount = 0;
+  document.querySelectorAll('#tower .zone').forEach(z => {
+    const zoneId = z.dataset.zone;
+    const correct = z.dataset.correct;
+    const placed = placedProducts[zoneId];
+    if (!placed){
+      allCorrect = false;
+      return;
+    }
+    placedCount++;
+    if (placed === correct){
+      z.classList.add('correct');
+      z.classList.remove('wrong');
+    } else {
+      z.classList.add('wrong');
+      z.classList.remove('correct');
+      allCorrect = false;
+    }
+  });
+
+  if (placedCount < ZONES.length){
+    showToast('Faltan productos', `Aún quedan ${ZONES.length - placedCount} productos por ubicar en la torre.`, 'error');
+    return;
+  }
+
+  setTimeout(()=>{
+    if (allCorrect){
+      showToast('¡Perfecto! 🎉', 'Todos los productos están en su lugar correcto. Pasemos a ver la torre real.', 'success', true);
+    } else {
+      showToast('Casi lo logras', 'Algunos productos no están en su lugar correcto. Mira las zonas en rojo y reubica. ¡Tú puedes!', 'error', true);
+    }
+    document.getElementById('toRevealBtn').classList.remove('hidden');
+  }, 200);
+}
+
+function showToast(title, msg, type, allowContinue) {
+  // Quitar toast previo
+  const oldToast = document.querySelector('.toast');
+  const oldBack = document.querySelector('.toast-backdrop');
+  if (oldToast) oldToast.remove();
+  if (oldBack) oldBack.remove();
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'toast-backdrop';
+  backdrop.onclick = () => { backdrop.remove(); toast.remove(); };
+
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + (type || '');
+  toast.innerHTML = `
+    <h4>${title}</h4>
+    <p>${msg}</p>
+    <button class="btn btn-primary" onclick="this.closest('.toast').remove(); document.querySelector('.toast-backdrop')?.remove();">Entendido</button>
+  `;
+  document.body.appendChild(backdrop);
+  document.body.appendChild(toast);
+}
+
+function resetTower(){
+  renderTowerChallenge();
+}
+
+/* ============================================================
+   PANTALLA 3 — REVEAL FINAL
+   ============================================================ */
+function renderReveal(){
+  const tower = document.getElementById('towerFinal');
+  tower.innerHTML = '';
+  ZONES.forEach((z, i) => {
+    const div = document.createElement('div');
+    div.className = 'zone filled correct';
+    div.dataset.idx = i;
+    div.innerHTML = `
+      <div class="zone-label">${z.label?z.label+'<br>':''}<span class="temp">${z.temp}</span></div>
+      <div class="zone-slot">
+        <div class="product-tile" style="cursor:pointer">
+          <div class="emoji">${z.emoji}</div>
+          <div class="label">${z.name}</div>
+        </div>
+      </div>
+    `;
+    div.addEventListener('click', ()=> highlightInfo(i));
+    tower.appendChild(div);
+  });
+
+  const panel = document.getElementById('infoPanel');
+  panel.innerHTML = '';
+
+  // Panel de takeaways
+  const takeaways = document.createElement('div');
+  takeaways.className = 'key-takeaways';
+  takeaways.innerHTML = `
+    <h3>🎯 Lo que descubrimos</h3>
+    <ul>
+      <li>El petróleo crudo es una <strong>mezcla</strong> de cientos de hidrocarburos.</li>
+      <li>Cada uno tiene una <strong>temperatura de ebullición</strong> diferente.</li>
+      <li>La torre los separa <strong>aprovechando esas diferencias</strong>: los livianos suben, los pesados bajan.</li>
+      <li>Es el <strong>mismo principio</strong> que vimos con el fraccionamiento de LGN en la Semana 6 — pero a escala mayor.</li>
+      <li>Una sola torre produce <strong>8 cortes</strong> que abastecen industrias completamente distintas.</li>
+    </ul>
+  `;
+  panel.appendChild(takeaways);
+
+  ZONES.forEach((z, i) => {
+    const card = document.createElement('div');
+    card.className = 'info-card';
+    card.id = 'info-' + i;
+    card.innerHTML = `
+      <h3><span class="emoji">${z.emoji}</span> ${z.name} <span class="temp-tag">${z.temp}</span></h3>
+      <p>${z.desc}</p>
+      <div class="uses">${z.uses.map(u=>`<span>${u}</span>`).join('')}</div>
+    `;
+    card.addEventListener('click', ()=> highlightInfo(i));
+    panel.appendChild(card);
+  });
+}
+
+function highlightInfo(i){
+  document.querySelectorAll('.info-card').forEach(c => c.classList.remove('highlight'));
+  const card = document.getElementById('info-' + i);
+  if (card){
+    card.classList.add('highlight');
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+function restartAll(){
+  goTo(0);
+}
+
+/* ============================================================
+   ATAJOS (solo desktop - no estorban en móvil)
+   ============================================================ */
+document.addEventListener('keydown', (e)=>{
+  if (e.key === 'ArrowRight' || e.key === ' '){
+    if (currentScreen < 3){
+      if (currentScreen === 1 && !mosaicRevealed) revealMosaic();
+      else goTo(currentScreen + 1);
+    }
+  } else if (e.key === 'ArrowLeft'){
+    if (currentScreen > 0) goTo(currentScreen - 1);
+  } else if (e.key === 'Escape'){
+    restartAll();
+  }
+});
+
+/* Prevenir zoom por doble-tap en iOS sin bloquear scroll */
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(e) {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, { passive: false });
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateProgress();
+</script>
+
+</body>
+</html>
