@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Respuestas — Situaciones Operativas en Refinación UF4</title>
+<style>
+@media print{body{font-size:11pt}h1{font-size:18pt}h2{font-size:14pt}h3{font-size:12pt}.sit{page-break-inside:avoid}}
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:800px;margin:40px auto;padding:0 30px;color:#1a1a2e;line-height:1.7}
+h1{text-align:center;color:#0d1b2a;border-bottom:3px solid #e67e22;padding-bottom:12px;margin-bottom:5px}
+.sub{text-align:center;color:#666;font-size:.9em;margin-bottom:30px}
+h2{color:#e67e22;margin-top:30px;border-left:4px solid #e67e22;padding-left:10px;font-size:1.15em}
+h3{color:#2c3e50;margin:12px 0 6px}
+.ctx{background:#f8f9fa;border:1px solid #dee2e6;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:.92em;color:#444}
+.q{font-weight:700;color:#34495e;margin:10px 0 4px}
+p{margin:4px 0 8px;text-align:justify}
+ul{margin:4px 0 8px 20px}li{margin:2px 0}
+.footer{text-align:center;margin-top:40px;padding-top:15px;border-top:2px solid #eee;color:#999;font-size:.8em}
+</style>
+</head>
+<body>
+<h1>Respuestas — Situaciones Operativas en Refinación</h1>
+<p class="sub">UF4 — Procesos Industriales 1 | UNIPAZ 2026-1</p>
+
+<h2>Situación 1 — Punto de Inflamación Fuera de Especificación en Diésel</h2>
+<div class="ctx">Diésel con flash point 8 °C por debajo de la especificación. ΔP en zona de despojamiento disminuyendo durante 7 días.</div>
+
+<p class="q">Q1: Fenómenos físicos que explican el arrastre de componentes ligeros</p>
+<p>Un punto de inflamación bajo indica contaminación del diésel con fracciones más livianas (querosén o nafta pesada). Los fenómenos involucrados son:</p>
+<ul>
+<li><b>Pérdida de eficiencia en el stripping lateral:</b> la disminución progresiva de ΔP en la zona de despojamiento sugiere daño o colapso parcial de los internos (platos o empaque) del stripper lateral. Esto reduce el contacto vapor-líquido y permite que componentes ligeros permanezcan disueltos en el corte diésel.</li>
+<li><b>Arrastre por inundación parcial:</b> si los platos entre la zona de querosén y diésel tienen algún daño, puede haber traslape de curvas de destilación (overlap), permitiendo que fracciones del corte superior caigan al corte inferior.</li>
+<li><b>Reducción del vapor de stripping efectivo:</b> aunque el caudal de vapor es normal, si los internos están dañados el vapor toma caminos preferenciales (channeling) sin contactar adecuadamente el líquido, reduciendo la remoción de ligeros.</li>
+</ul>
+<p>La relación con la ΔP es directa: una caída de presión diferencial menor indica menos resistencia al flujo → internos colapsados o rotos → menor separación.</p>
+
+<p class="q">Q2: Dos alternativas de acción</p>
+<p><b>Alternativa A — Operativa inmediata (sin paro):</b> Aumentar el caudal de vapor de stripping al stripper lateral (10-15 %), reducir ligeramente el caudal de extracción de diésel y elevar la temperatura del plato de extracción 5-8 °C para mejorar la vaporización de ligeros. Costo bajo (~ajuste operativo), respuesta en horas, riesgo bajo. Esta es una medida paliativa que no corrige la causa raíz.</p>
+<p><b>Alternativa B — Parada programada:</b> Inspeccionar y reparar/reemplazar los internos del stripper lateral. Implica parada de unidad (3-5 días), costo de lucro cesante significativo, pero resuelve definitivamente el problema. Se recomienda programar en la próxima ventana de mantenimiento. Incluir inspección con cámara de los platos de la torre en la zona diésel-querosén.</p>
+
+<h2>Situación 2 — Tubos con Hot Spots en Horno de Carga</h2>
+<div class="ctx">Tres hot spots en sección radiante del horno F-101, +60 °C sobre tubos vecinos. Carga +5 % sobre diseño. ΔP en aumento.</div>
+
+<p class="q">Q1: Mecanismos de degradación consistentes</p>
+<ul>
+<li><b>Coquización interna de tubos:</b> el aumento de carga (+5 %) eleva el tiempo de residencia del crudo a temperaturas críticas, formando depósitos de coque en la pared interna. El coque actúa como aislante térmico, la pared del tubo se sobrecalienta para transferir el mismo calor. Consistente con el ΔP elevado (restricción al flujo) y los puntos calientes localizados.</li>
+<li><b>Mal-distribución de flujo:</b> si un paso tiene mayor resistencia (por coque parcial), el flujo se redistribuye hacia otros pasos, dejando los tubos afectados con bajo caudal y mayor temperatura de piel.</li>
+<li><b>Daño o desajuste de quemadores:</b> una llama mal orientada podría causar impingement directo sobre los tubos. Sin embargo, esto no explicaría el aumento de ΔP, por lo que la coquización es la hipótesis más probable.</li>
+</ul>
+<p>Desde transferencia de calor: Q = U·A·ΔT. Si hay coque (baja U), la ΔT pared-fluido debe aumentar para transferir el mismo Q, elevando la temperatura de piel.</p>
+
+<p class="q">Q2: Estrategias sin paro inmediato y criterio de paro</p>
+<p><b>Estrategia 1:</b> Reducir la carga al horno al valor de diseño o ligeramente por debajo, disminuyendo el flujo de combustible. Monitorear termográficamente los hot spots cada turno. Esto reduce la tasa de coquización y el riesgo de rotura.</p>
+<p><b>Estrategia 2:</b> Inyección de aditivos anticoque (dispersantes) en la carga del horno para retardar la formación de depósitos y ablandar los existentes.</p>
+<p><b>Criterio de paro:</b> Se debe parar para descoquizar cuando la temperatura de piel alcance el 85-90 % del límite de diseño metalúrgico del tubo (típicamente 540 °C para aceros al cromo-molibdeno), o cuando el ΔP supere el 50 % del valor de diseño, lo que ocurra primero.</p>
+
+<h2>Situación 3 — Vibración Excesiva en Bomba de Fondos</h2>
+<div class="ctx">Bomba P-204A con vibración de 4.2 a 9.8 mm/s RMS. Cojinete +12 °C. Producto a 340 °C. Respaldo parado 6 meses.</div>
+
+<p class="q">Q1: Causas mecánicas e hidráulicas</p>
+<ul>
+<li><b>Cavitación / problemas de NPSH:</b> a 340 °C la presión de vapor del residuo es alta; cualquier caída de nivel o restricción en succión puede provocar NPSHd &lt; NPSHr. Se confirma midiendo presión de succión y comparando con curva de NPSH. El espectro de vibración mostraría frecuencias aleatorias de banda ancha.</li>
+<li><b>Daño de rodamiento:</b> el aumento de temperatura del cojinete (+12 °C) junto con vibración sugiere degradación de rodamiento. Se confirma con análisis espectral (frecuencias BPFO, BPFI, BSF) y análisis de envolvente.</li>
+<li><b>Desalineación:</b> posible por dilatación térmica diferencial. Se confirma con componente 2× RPM predominante en espectro axial. Verificar con alineación láser.</li>
+</ul>
+
+<p class="q">Q2: Procedimiento de transferencia segura a bomba de respaldo</p>
+<p>Procedimiento paso a paso:</p>
+<ul>
+<li>1. Verificar que la bomba B tenga lubricación adecuada, girar manualmente el eje para confirmar que no está trabada.</li>
+<li>2. <b>Precalentamiento:</b> abrir lentamente el bypass de calentamiento (o la válvula de succión un mínimo) para permitir que el residuo caliente precaliente gradualmente la carcasa. Velocidad de calentamiento: máx. 50 °C/h para evitar choque térmico y distorsión de carcasa.</li>
+<li>3. Monitorear temperatura de carcasa hasta alcanzar al menos 280 °C (±60 °C del producto).</li>
+<li>4. Arrancar la bomba B con válvula de descarga cerrada, verificar vibración, temperatura y presión de descarga.</li>
+<li>5. Abrir gradualmente la descarga de B mientras se cierra la de A, manteniendo presión de sistema estable.</li>
+<li>6. Riesgos a mitigar: choque térmico (agrietamiento de carcasa), dilatación diferencial eje-carcasa, posible atascamiento de sellos por depósitos de 6 meses de inactividad.</li>
+</ul>
+
+<h2>Situación 4 — Caída de Eficiencia en Tren de Precalentamiento</h2>
+<div class="ctx">Temperatura de salida −18 °C en 3 meses. Horno quema +9 % de combustible. Crudo con más asfaltenos y sales. ΔP sin cambio.</div>
+
+<p class="q">Q1: Distinguir entre tipos de ensuciamiento</p>
+<ul>
+<li><b>Ensuciamiento por asfaltenos:</b> depósito orgánico oscuro que reduce U gradualmente. Se correlaciona con el cambio de crudo. El cálculo de U global (U = Q / (A·LMTD)) mostraría un descenso progresivo. Los asfaltenos forman capas adherentes que no necesariamente aumentan ΔP porque son relativamente delgadas pero muy aislantes.</li>
+<li><b>Depósitos salinos:</b> forman incrustaciones duras, generalmente correlacionadas con sales de calcio y magnesio en el crudo. Normalmente sí incrementan ΔP. Como ΔP no ha cambiado, es menos probable como causa principal.</li>
+<li><b>Bypass interno:</b> sellos de baffles desgastados permiten que el fluido tome atajos sin intercambiar calor. Se identifica si la caída de U es mayor de lo esperado por ensuciamiento y si hay diferencias de temperatura anómalas entre pasos.</li>
+</ul>
+<p>El hecho de que ΔP no cambie y el crudo tenga más asfaltenos apunta fuertemente a ensuciamiento orgánico por asfaltenos.</p>
+
+<p class="q">Q2: Comparación económica de rutas de limpieza</p>
+<p><b>(a) Limpieza química en línea:</b> inyección de solventes/dispersantes de asfaltenos (costo ~$15,000-30,000 USD por tratamiento). No requiere paro, pero efectividad limitada (recuperación del 40-60 % de U). Puede repetirse periódicamente.</p>
+<p><b>(b) Limpieza mecánica en parada:</b> hidroblasting a alta presión de los haces tubulares. Requiere parada (2-4 días), lucro cesante estimado alto. Costo de servicio ~$30,000-50,000 USD, pero recupera ~95 % de U original.</p>
+<p>Con +9 % de combustible adicional, el sobrecosto por combustible puede superar los $100,000 USD/año, por lo que la limpieza mecánica tiene un retorno de inversión superior a largo plazo. Se recomienda la ruta (a) como medida inmediata y programar (b) en la próxima parada.</p>
+
+<h2>Situación 5 — Pérdida Parcial de Vapor de Media Presión</h2>
+<div class="ctx">Vapor MP cae de 150 a 128 psig. Caldera de 200 t/h disparada por bajo nivel en domo. Dos calderas activas.</div>
+
+<p class="q">Q1: Jerarquía de prioridades para recorte de vapor</p>
+<p>El coordinador de turno debe seguir esta jerarquía (de mayor a menor prioridad de preservación):</p>
+<ul>
+<li><b>1. Seguridad:</b> mantener vapor para sellos de bombas, sistemas de dilución de antorchas, purgas de seguridad de equipos y sistemas contra incendio con vapor. Nunca recortar.</li>
+<li><b>2. Integridad de equipos:</b> stripping mínimo de torres (evitar daño a platos por flujo invertido), vapor de atomización de quemadores de hornos.</li>
+<li><b>3. Calidad de producto:</b> reboilers esenciales para especificaciones mínimas de producto. Aceptar productos temporalmente fuera de spec antes que comprometer seguridad.</li>
+<li><b>4. Eficiencia:</b> calentamiento de tanques, traceado eléctrico con respaldo, precalentamiento de servicios auxiliares. Se pueden suspender temporalmente.</li>
+</ul>
+<p>Criterio económico: reducir carga de unidades proporcionalmente, priorizando las de mayor margen de refinación.</p>
+
+<p class="q">Q2: Dos mejoras estructurales</p>
+<p><b>Mejora 1 — Instrumentación y control de nivel del domo:</b> instalar sistema de nivel redundante (2oo3 - dos de tres) con transmisores independientes y alarmas de pre-baja con acción correctiva automática (apertura de válvula de agua de alimentación de respaldo). Esto previene disparos espurios por falla de un solo transmisor.</p>
+<p><b>Mejora 2 — Sistema de gestión automática de carga de vapor:</b> implementar un sistema de load-shedding automático que, ante caída de presión del header, reduzca consumidores no críticos en secuencia preconfigurada, dando tiempo para estabilizar sin intervención manual a las 3 a.m. (turno con menor dotación).</p>
+
+<h2>Situación 6 — Lazo de Nivel Oscilante en Tambor de Reflujo</h2>
+<div class="ctx">Oscilaciones de nivel ±25 %, período ~4 min. Transmisor cambiado hace 2 semanas. Válvulas aparentemente bien.</div>
+
+<p class="q">Q1: Diferencia entre oscilación por sintonía PID vs. problemas mecánicos</p>
+<ul>
+<li><b>Sintonía PID inadecuada:</b> las oscilaciones son regulares y simétricas. Si se pone el controlador en manual y las oscilaciones cesan, el problema es la sintonía. Un controlador con ganancia excesiva o tiempo integral demasiado corto genera ciclos límite con período regular (como los 4 min observados). Diagnóstico: prueba en manual, verificar que la ganancia del proceso no cambió con el nuevo transmisor (puede tener rango diferente).</li>
+<li><b>Stiction en válvula:</b> las oscilaciones muestran un patrón cuadrado o trapezoidal en la posición de la válvula (se queda pegada, luego salta). En modo manual, si se hacen pequeños cambios de salida (1-2 %) y la válvula no responde hasta acumular un cambio mayor, hay stiction. Diagnóstico: graficar salida del controlador vs. variable de proceso (diagrama de fase mostrará un patrón elíptico abierto).</li>
+</ul>
+<p>Dado que coincide con el cambio de transmisor, la causa más probable es que la sintonía anterior no es compatible con la ganancia del nuevo transmisor.</p>
+
+<p class="q">Q2: Método de resintonización recomendado</p>
+<p>Para un proceso integrador como el nivel de líquido, <b>el método de Ziegler-Nichols en lazo cerrado no es recomendable</b> porque puede llevar a inestabilidad. Se recomienda:</p>
+<p><b>Lambda tuning (sintonía lambda):</b> es el método más apropiado porque permite especificar directamente la velocidad de respuesta deseada (λ). Para un proceso integrador: Kc = 1/(Kp·λ) y Ti = 2λ, donde Kp es la ganancia integradora del proceso (medida con prueba escalonada en manual: tasa de cambio de nivel por % de apertura de válvula). Se recomienda λ = 2-3 veces el período natural (8-12 min), dando una respuesta estable sin sobreimpulso. Este método es inherentemente estable y robusto para procesos de nivel.</p>
+
+<h2>Situación 7 — Fuga Menor en Brida de Línea Caliente</h2>
+<div class="ctx">Fuga tipo goteo en brida 8", producto a 320 °C y 6 bar. Sin válvulas de bloqueo. Sin vapor visible aún.</div>
+
+<p class="q">Q1: Riesgos específicos a evaluar</p>
+<ul>
+<li><b>Auto-ignición:</b> el residuo atmosférico a 320 °C está cerca o por encima de su temperatura de auto-ignición (~250-350 °C según composición). Una fuga que contacte una superficie caliente o que se acumule y se exponga al aire puede generar ignición espontánea sin fuente de chispa. Riesgo ALTO.</li>
+<li><b>Escalamiento de fuga:</b> la fatiga térmica cíclica y la corrosión pueden degradar progresivamente la junta, y una fuga menor puede convertirse en ruptura catastrófica. A 6 bar y 320 °C, una liberación súbita generaría vaporización flash y una nube inflamable.</li>
+<li><b>Fatiga térmica en la brida:</b> ciclos de mojado-secado por la fuga generan gradientes térmicos localizados que aceleran el agrietamiento por fatiga en los espárragos y la cara de la brida.</li>
+</ul>
+<p>Dado el riesgo de auto-ignición y la imposibilidad de aislamiento sin paro, se debe evaluar paro controlado a menos que la reparación en línea sea viable y segura.</p>
+
+<p class="q">Q2: Técnicas de reparación en servicio</p>
+<ul>
+<li><b>Leak sealing por inyección (encapsulado con inyección de sellante):</b> se instala un dispositivo de contención alrededor de la brida y se inyecta sellante a alta temperatura. Aplicable según ASME PCC-2 Art. 5.1 para fugas pequeñas en bridas. Limitación: temperatura máxima del sellante (~350 °C), por lo que a 320 °C está al límite. Requiere personal especializado certificado.</li>
+<li><b>Line-clamp (abrazadera de línea):</b> dispositivo mecánico que envuelve la brida para contener la fuga. Diseñado para servicio temporal. Norma ASME PCC-2 Art. 5.2.</li>
+</ul>
+<p>Limitaciones: ambas son reparaciones temporales. A 320 °C y sin bloqueo, la instalación conlleva riesgo significativo para el personal. Si la tasa de fuga aumenta durante la instalación, se debe abortar y proceder a paro de emergencia. Se recomienda instalar monitores de gases combustibles y espuma contra incendio durante la intervención.</p>
+
+<h2>Situación 8 — Hidrocarburos en Agua de Despojamiento Ácido</h2>
+<div class="ctx">Agua agria con 160 ppm de hidrocarburos (límite 50 ppm). Interfase del separador previo fluctuante.</div>
+
+<p class="q">Q1: Relación interfase-arrastre</p>
+<p>El separador agua/hidrocarburo funciona por diferencia de densidad con un tiempo de residencia diseñado para permitir la separación gravitacional. Las fluctuaciones de interfase indican:</p>
+<ul>
+<li><b>Control de interfase deficiente:</b> si la interfase sube, el agua de salida arrastra hidrocarburo; si baja, el hidrocarburo de salida arrastra agua. Un control inestable permite arrastre intermitente de hidrocarburos hacia la corriente de agua agria.</li>
+<li><b>Tiempo de residencia insuficiente:</b> si el caudal ha aumentado o las propiedades del crudo cambiaron, el tiempo de residencia real puede ser menor al requerido para una separación adecuada.</li>
+<li><b>Formación de emulsiones:</b> el agua agria contiene H₂S y NH₃ que actúan como surfactantes naturales. Junto con la agitación en válvulas, se forman emulsiones estables que no decantan en el tiempo disponible. La banda de emulsión (rag layer) se acumula en la interfase y es arrastrada hacia ambas salidas.</li>
+</ul>
+
+<p class="q">Q2: Dos alternativas de solución</p>
+<p><b>Alternativa 1 — Control operativo del separador:</b></p>
+<ul>
+<li>Estabilizar el control de interfase: verificar calibración del transmisor de interfase, reducir la ganancia del controlador para evitar oscilaciones.</li>
+<li>Reducir el caudal si es posible para aumentar tiempo de residencia.</li>
+<li>Inyección de desemulsificante químico (50-100 ppm) en la alimentación al separador.</li>
+<li>Drenar periódicamente la banda de emulsión acumulada.</li>
+</ul>
+<p><b>Alternativa 2 — Mejora de equipo:</b></p>
+<ul>
+<li>Instalar coalescedores de placas corrugadas o filtros coalescentes aguas abajo del separador para capturar gotas de hidrocarburo de hasta 10 micras.</li>
+<li>Implementar medición de interfase por tecnología de radar de onda guiada (más precisa que ΔP para emulsiones).</li>
+<li>Agregar una segunda etapa de separación (tanque de retención con mayor tiempo de residencia).</li>
+</ul>
+<p><b>Normativa colombiana:</b> la Resolución 631 de 2015 del MINAMBIENTE establece límites de vertimiento de grasas y aceites (10 mg/L para vertimiento a cuerpo de agua). El incumplimiento puede generar sanciones de la ANLA. La PTAR biológica no puede operar con hidrocarburos >50 ppm sin inhibición bacteriana, por lo que la acción correctiva es urgente.</p>
+
+<div class="footer">
+UNIPAZ — Ingeniería de Producción — Procesos Industriales 1 — 2026-1<br>
+UF4 — Respuestas al Taller de Situaciones Operativas en Refinación
+</div>
+</body>
+</html>

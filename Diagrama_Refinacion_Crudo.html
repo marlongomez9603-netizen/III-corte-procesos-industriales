@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Proceso Completo del Crudo en Refinería</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080810;--card:#111122;--text:#e2e2ee;--muted:#8888aa;--border:rgba(255,255,255,.06);--r:16px;
+--c1:#e67e22;--c2:#e74c3c;--c3:#3498db;--c4:#2ecc71;--c5:#9b59b6;--c6:#1abc9c;--c7:#f39c12;--c8:#e91e63}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.75}
+.hero{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;background:linear-gradient(135deg,#e67e22,#e74c3c 40%,#3498db 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:700px}
+.glow{position:absolute;width:350px;height:350px;border-radius:50%;filter:blur(120px);opacity:.08;pointer-events:none}
+section{padding:50px 20px;max-width:1100px;margin:0 auto}
+h2{font-size:1.6rem;font-weight:800;margin-bottom:20px;text-align:center}
+h3{font-size:1.15rem;font-weight:700;margin-bottom:8px}
+
+/* Flow diagram */
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin:40px auto;max-width:900px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 28px;width:100%;max-width:700px;position:relative;transition:transform .3s,border-color .3s}
+.step:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.15)}
+.step-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.step-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;flex-shrink:0}
+.step-title{font-weight:800;font-size:1.05rem}
+.step p{font-size:.88rem;color:var(--muted);line-height:1.75}
+.step strong{color:var(--text)}
+.step ul{margin:6px 0 0 18px;font-size:.85rem;color:var(--muted)}
+.step li{margin:3px 0}
+.arrow{width:3px;height:35px;position:relative;display:flex;flex-direction:column;align-items:center}
+.arrow::after{content:'';width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;position:absolute;bottom:0}
+.params{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.param{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:4px 12px;font-size:.75rem;color:var(--muted)}
+.param b{color:var(--text)}
+
+/* Products section */
+.prods{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:30px}
+.prod{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.prod h4{font-size:.9rem;font-weight:700;margin-bottom:6px}
+.prod p{font-size:.82rem;color:var(--muted)}
+
+/* Downstream */
+.down-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:20px}
+.dcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;transition:transform .3s}
+.dcard:hover{transform:translateY(-2px)}
+.dcard h3{font-size:1rem;margin-bottom:6px}
+.dcard p{font-size:.85rem;color:var(--muted)}
+.dcard .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+
+.divider{width:80px;height:3px;border-radius:2px;margin:50px auto}
+.footer{text-align:center;padding:40px 20px;color:rgba(255,255,255,.2);font-size:.8rem}
+@media(max-width:600px){section{padding:30px 14px}.step{padding:16px 18px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<div class="glow" style="background:var(--c1);top:-150px;right:-50px"></div>
+<div class="glow" style="background:var(--c3);bottom:-100px;left:-50px"></div>
+<h1>Proceso Completo del Crudo en una Refinería</h1>
+<p>Desde la recepción del crudo hasta la obtención de productos comerciales — Diagrama de flujo y explicación detallada paso a paso</p>
+<p style="margin-top:12px;font-size:.82rem;color:rgba(255,255,255,.3)">UF4 — Procesos Industriales 1 | UNIPAZ 2026-1</p>
+</div>
+
+<section>
+<h2 style="background:linear-gradient(90deg,var(--c1),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Diagrama de Flujo — Procesamiento Primario</h2>
+<p style="text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:10px">Recorrido del crudo desde su llegada hasta la obtención de fracciones</p>
+
+<div class="flow">
+
+<!-- STEP 1 -->
+<div class="step" style="border-top:3px solid var(--c7)">
+<div class="step-head"><div class="step-num" style="background:rgba(243,156,18,.15);color:var(--c7)">1</div><div class="step-title" style="color:var(--c7)">🛢️ Recepción y Almacenamiento</div></div>
+<p>El crudo llega a la refinería por <strong>oleoducto, buque tanque o carrotanque</strong>. Se almacena en <strong>tanques de techo flotante</strong> (para reducir emisiones de volátiles). Aquí se realizan las primeras mediciones de calidad: <strong>°API, contenido de agua y sedimentos (BSW), azufre total y viscosidad</strong>.</p>
+<div class="params"><span class="param"><b>T:</b> Ambiente</span><span class="param"><b>P:</b> Atmosférica</span><span class="param"><b>Capacidad:</b> 50,000-500,000 bbl/tanque</span></div>
+</div>
+
+<div class="arrow" style="background:linear-gradient(var(--c7),var(--c1))"><div style="position:absolute;bottom:-2px;border-top:10px solid var(--c1)" class="arrow-tip"></div></div>
+
+<!-- STEP 2 -->
+<div class="step" style="border-top:3px solid var(--c1)">
+<div class="step-head"><div class="step-num" style="background:rgba(230,126,34,.15);color:var(--c1)">2</div><div class="step-title" style="color:var(--c1)">⚡ Precalentamiento Inicial (Tren 1)</div></div>
+<p>Antes de desalar, el crudo se calienta de <strong>~30 °C a ~120-130 °C</strong> mediante intercambio de calor con productos calientes que salen de la torre (diésel, querosén, residuo). Esto tiene dos propósitos: <strong>reducir la viscosidad</strong> del crudo para facilitar la mezcla con agua de lavado, y <strong>recuperar energía</strong> (menor consumo de combustible en el horno).</p>
+<div class="params"><span class="param"><b>T entrada:</b> 25-35 °C</span><span class="param"><b>T salida:</b> 120-130 °C</span><span class="param"><b>Equipo:</b> Intercambiadores carcasa-tubos</span></div>
+</div>
+
+<div class="arrow" style="background:linear-gradient(var(--c1),var(--c4))"></div>
+
+<!-- STEP 3 -->
+<div class="step" style="border-top:3px solid var(--c4)">
+<div class="step-head"><div class="step-num" style="background:rgba(46,204,113,.15);color:var(--c4)">3</div><div class="step-title" style="color:var(--c4)">🧪 Desalado (Desalting)</div></div>
+<p>Proceso <strong>CRÍTICO</strong>. El crudo contiene sales disueltas en agua emulsionada (NaCl, MgCl₂, CaCl₂) que causan <strong>corrosión en equipos aguas abajo</strong> (el MgCl₂ y CaCl₂ se hidrolizan a HCl a altas temperaturas). El proceso consiste en:</p>
+<ul>
+<li><strong>Inyección de agua de lavado</strong> (3-8 % vol) para disolver las sales</li>
+<li><strong>Válvula mezcladora</strong> para crear emulsión controlada crudo-agua</li>
+<li><strong>Desalador electrostático:</strong> aplica campo eléctrico de alto voltaje (15,000-35,000 V) que rompe la emulsión por coalescencia electroestática — las gotas de agua se atraen, crecen y decantan por gravedad</li>
+<li>Se busca reducir sales de ~50-200 PTB a <strong>&lt; 1 PTB</strong> (libras de sal por mil barriles)</li>
+</ul>
+<p style="margin-top:8px">Refinanciar refinanciar con crudo pesado o muy salado pueden usar <strong>dos etapas de desalado</strong> en serie (eficiencia >99 %).</p>
+<div class="params"><span class="param"><b>T:</b> 120-150 °C</span><span class="param"><b>P:</b> 10-15 bar</span><span class="param"><b>Voltaje:</b> 15-35 kV</span><span class="param"><b>Eficiencia:</b> 90-99%</span></div>
+</div>
+
+<div class="arrow" style="background:linear-gradient(var(--c4),var(--c3))"></div>
+
+<!-- STEP 4 -->
+<div class="step" style="border-top:3px solid var(--c3)">
+<div class="step-head"><div class="step-num" style="background:rgba(52,152,219,.15);color:var(--c3)">4</div><div class="step-title" style="color:var(--c3)">🔥 Tren de Precalentamiento (Tren 2 — Principal)</div></div>
+<p>Después del desalado, el crudo continúa calentándose en un <strong>tren de intercambiadores</strong> (típicamente 8-15 intercambiadores en serie) aprovechando el calor de los productos calientes y reflujos circulantes. El crudo sube de <strong>~130 °C a ~270-280 °C</strong>. Este tren recupera el 60-70 % de la energía necesaria, ahorrando combustible en el horno.</p>
+<div class="params"><span class="param"><b>T entrada:</b> 130 °C</span><span class="param"><b>T salida:</b> 270-280 °C</span><span class="param"><b>Recuperación:</b> 60-70% energía</span><span class="param"><b>Tipo:</b> Shell & tube, TEMA</span></div>
+</div>
+
+<div class="arrow" style="background:linear-gradient(var(--c3),var(--c2))"></div>
+
+<!-- STEP 5 -->
+<div class="step" style="border-top:3px solid var(--c2)">
+<div class="step-head"><div class="step-num" style="background:rgba(231,76,60,.15);color:var(--c2)">5</div><div class="step-title" style="color:var(--c2)">🔥 Horno de Carga (Fired Heater)</div></div>
+<p>El crudo entra al <strong>horno de proceso</strong> donde recibe el calentamiento final. Tiene dos secciones:</p>
+<ul>
+<li><strong>Sección de convección:</strong> los gases de chimenea precalientan los tubos (280→320 °C)</li>
+<li><strong>Sección radiante:</strong> exposición directa a la llama de los quemadores (320→<strong>350-370 °C</strong>)</li>
+</ul>
+<p style="margin-top:6px">La temperatura se controla cuidadosamente: si se supera <strong>~380 °C</strong>, comienza el <strong>craqueo térmico</strong> no deseado (formación de coque y olefinas). El crudo sale como una mezcla bifásica (vapor + líquido) lista para entrar a la torre.</p>
+<div class="params"><span class="param"><b>T salida:</b> 350-370 °C</span><span class="param"><b>Eficiencia:</b> 85-92%</span><span class="param"><b>Combustible:</b> Gas o fuel oil</span><span class="param"><b>Zona flash:</b> ~365 °C</span></div>
+</div>
+
+<div class="arrow" style="background:linear-gradient(var(--c2),var(--c5))"></div>
+
+<!-- STEP 6 -->
+<div class="step" style="border-top:3px solid var(--c5)">
+<div class="step-head"><div class="step-num" style="background:rgba(155,89,182,.15);color:var(--c5)">6</div><div class="step-title" style="color:var(--c5)">🏗️ Destilación Atmosférica (CDU)</div></div>
+<p>El corazón de la refinería. La mezcla bifásica entra a la <strong>zona flash</strong> de la torre (a ~365 °C y ~1.5-2 atm). Los vapores ascienden y los líquidos descienden. La torre tiene <strong>30-50 platos</strong> y separa el crudo en fracciones por punto de ebullición:</p>
+<ul>
+<li>🔝 <strong>Gases y nafta liviana</strong> (tope, &lt;85 °C) → GLP, gasolina base</li>
+<li><strong>Nafta pesada</strong> (85-180 °C) → Gasolina, alimentación a reformado</li>
+<li><strong>Querosén/Jet fuel</strong> (180-250 °C) → Combustible de aviación</li>
+<li><strong>Diésel / Gasóleo liviano</strong> (250-350 °C) → ACPM</li>
+<li>🔻 <strong>Residuo atmosférico</strong> (fondo, >350 °C) → Alimentación a vacío</li>
+</ul>
+<p style="margin-top:6px">Cada corte lateral tiene un <strong>stripper</strong> con vapor que remueve componentes ligeros arrastrados.</p>
+<div class="params"><span class="param"><b>T zona flash:</b> 360-370 °C</span><span class="param"><b>P:</b> 1.2-2 atm</span><span class="param"><b>Platos:</b> 30-50</span><span class="param"><b>Reflujos:</b> 2-3 circulantes</span></div>
+</div>
+
+<div class="arrow" style="background:linear-gradient(var(--c5),var(--c6))"></div>
+
+<!-- STEP 7 -->
+<div class="step" style="border-top:3px solid var(--c6)">
+<div class="step-head"><div class="step-num" style="background:rgba(26,188,156,.15);color:var(--c6)">7</div><div class="step-title" style="color:var(--c6)">🌀 Destilación al Vacío (VDU)</div></div>
+<p>El <strong>residuo atmosférico</strong> (>350 °C) aún contiene fracciones valiosas, pero no puede calentarse más sin craqueo. Solución: <strong>reducir la presión a 25-75 mmHg</strong> (vacío) para que hierva a menor temperatura.</p>
+<ul>
+<li><strong>Gasóleo liviano de vacío (LVGO):</strong> alimentación a FCC o hydrocracking</li>
+<li><strong>Gasóleo pesado de vacío (HVGO):</strong> alimentación a FCC</li>
+<li><strong>Residuo de vacío (fondo):</strong> asfaltos, coque, fuel oil pesado</li>
+</ul>
+<div class="params"><span class="param"><b>T:</b> 390-410 °C</span><span class="param"><b>P:</b> 25-75 mmHg abs</span><span class="param"><b>Internos:</b> Empaque estructurado</span></div>
+</div>
+
+</div><!-- end flow -->
+</section>
+
+<div class="divider" style="background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3))"></div>
+
+<section>
+<h2 style="background:linear-gradient(90deg,var(--c3),var(--c5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Procesos de Conversión y Tratamiento (Aguas Abajo)</h2>
+<p style="text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:10px">Las fracciones obtenidas se procesan para maximizar productos de alto valor</p>
+
+<div class="down-grid">
+
+<div class="dcard" style="border-top:3px solid var(--c2)">
+<span class="tag" style="background:rgba(231,76,60,.15);color:var(--c2)">Conversión</span>
+<h3 style="color:var(--c2)">FCC — Craqueo Catalítico Fluido</h3>
+<p>Convierte <strong>gasóleos pesados (VGO)</strong> en gasolina y olefinas ligeras usando un catalizador zeolítico a <strong>500-540 °C</strong>. El catalizador circula entre reactor y regenerador. Produce ~50 % del pool de gasolina de la refinería.</p>
+</div>
+
+<div class="dcard" style="border-top:3px solid var(--c3)">
+<span class="tag" style="background:rgba(52,152,219,.15);color:var(--c3)">Conversión</span>
+<h3 style="color:var(--c3)">Hydrocracking</h3>
+<p>Similar al FCC pero opera con <strong>hidrógeno a alta presión</strong> (100-200 bar) y catalizador bifuncional. Convierte gasóleos pesados en <strong>diésel y jet fuel de alta calidad</strong> (bajo azufre). Más costoso pero productos superiores.</p>
+</div>
+
+<div class="dcard" style="border-top:3px solid var(--c1)">
+<span class="tag" style="background:rgba(230,126,34,.15);color:var(--c1)">Mejoramiento</span>
+<h3 style="color:var(--c1)">Reformado Catalítico</h3>
+<p>Transforma <strong>nafta pesada</strong> (bajo octanaje, ~50 RON) en <strong>reformado de alto octanaje</strong> (~95-100 RON) mediante deshidrogenación de naftenos a aromáticos. Opera a 480-530 °C con catalizador de Pt/Re. También produce <strong>hidrógeno</strong> (esencial para hidrotratamiento).</p>
+</div>
+
+<div class="dcard" style="border-top:3px solid var(--c4)">
+<span class="tag" style="background:rgba(46,204,113,.15);color:var(--c4)">Mejoramiento</span>
+<h3 style="color:var(--c4)">Isomerización</h3>
+<p>Convierte <strong>nafta liviana</strong> (n-pentano, n-hexano) en sus <strong>isómeros ramificados</strong> de mayor octanaje. Opera a baja temperatura (120-180 °C) con catalizador de Pt. Complementa al reformado para cumplir especificaciones de gasolina.</p>
+</div>
+
+<div class="dcard" style="border-top:3px solid var(--c5)">
+<span class="tag" style="background:rgba(155,89,182,.15);color:var(--c5)">Mejoramiento</span>
+<h3 style="color:var(--c5)">Alquilación</h3>
+<p>Combina <strong>olefinas (butilenos)</strong> del FCC con <strong>isobutano</strong> usando catalizador ácido (HF o H₂SO₄) para producir <strong>alquilato</strong>: componente ideal de gasolina (alto octanaje, sin aromáticos ni olefinas, baja presión de vapor).</p>
+</div>
+
+<div class="dcard" style="border-top:3px solid var(--c6)">
+<span class="tag" style="background:rgba(26,188,156,.15);color:var(--c6)">Limpieza</span>
+<h3 style="color:var(--c6)">Hidrotratamiento (HDT)</h3>
+<p>Elimina <strong>azufre, nitrógeno y metales</strong> de las fracciones usando hidrógeno a alta presión (30-100 bar) y catalizador Co-Mo o Ni-Mo. Esencial para cumplir normas ambientales de diésel (&lt;10 ppm S) y gasolina (&lt;30 ppm S).</p>
+</div>
+
+<div class="dcard" style="border-top:3px solid var(--c7)">
+<span class="tag" style="background:rgba(243,156,18,.15);color:var(--c7)">Residuos</span>
+<h3 style="color:var(--c7)">Coquización Retardada (Delayed Coker)</h3>
+<p>Procesa el <strong>residuo de vacío</strong> por craqueo térmico severo (~500 °C). Produce nafta, gasóleos y <strong>coque de petróleo</strong> (usado en ánodos, cemento o como combustible). Maximiza la conversión del fondo del barril.</p>
+</div>
+
+<div class="dcard" style="border-top:3px solid var(--c8)">
+<span class="tag" style="background:rgba(233,30,99,.15);color:var(--c8)">Final</span>
+<h3 style="color:var(--c8)">Blending y Despacho</h3>
+<p>Las fracciones tratadas se <strong>mezclan (blending)</strong> en proporciones calculadas para obtener productos comerciales que cumplan especificaciones: gasolina corriente/extra, ACPM, jet fuel, fuel oil. Se despachan por poliducto, carrotanque o buque.</p>
+</div>
+
+</div>
+</section>
+
+<div class="divider" style="background:linear-gradient(90deg,var(--c4),var(--c1))"></div>
+
+<section>
+<h2>📋 Resumen Secuencial Completo</h2>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-top:20px;font-size:.92rem;line-height:2">
+<p><strong style="color:var(--c7)">1. Recepción</strong> → Crudo llega y se almacena en tanques de techo flotante</p>
+<p><strong style="color:var(--c1)">2. Precalentamiento 1</strong> → Se calienta de ~30 a ~120 °C con intercambiadores (para poder desalar)</p>
+<p><strong style="color:var(--c4)">3. Desalado</strong> → Se mezcla con agua, pasa por campo eléctrico, se eliminan sales y sedimentos</p>
+<p><strong style="color:var(--c3)">4. Precalentamiento 2</strong> → Se calienta de ~130 a ~270 °C con calor de productos de la torre</p>
+<p><strong style="color:var(--c2)">5. Horno</strong> → Calentamiento final a 350-370 °C (mezcla bifásica vapor-líquido)</p>
+<p><strong style="color:var(--c5)">6. Destilación Atmosférica</strong> → Separación en gas, nafta, querosén, diésel y residuo atmosférico</p>
+<p><strong style="color:var(--c6)">7. Destilación al Vacío</strong> → El residuo atmosférico se fracciona bajo vacío en gasóleos y residuo de vacío</p>
+<p><strong style="color:var(--c2)">8. Procesos de Conversión</strong> → FCC, Hydrocracking, Coker transforman fracciones pesadas en ligeras</p>
+<p><strong style="color:var(--c1)">9. Procesos de Mejoramiento</strong> → Reformado, Isomerización, Alquilación mejoran calidad de gasolina</p>
+<p><strong style="color:var(--c6)">10. Hidrotratamiento</strong> → Se remueve azufre de todos los combustibles</p>
+<p><strong style="color:var(--c8)">11. Blending y Despacho</strong> → Mezcla final y distribución de productos comerciales</p>
+</div>
+</section>
+
+<div class="footer">UNIPAZ — Ingeniería de Producción — Procesos Industriales 1 — 2026-1<br>UF4 — Proceso Completo del Crudo en Refinería</div>
+
+</body>
+</html>
