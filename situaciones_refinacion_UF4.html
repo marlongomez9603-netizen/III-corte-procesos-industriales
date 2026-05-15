@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UF4 — Situaciones Operativas en Refinación | Procesos Industriales 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080810;--card:#111122;--card2:#161630;--text:#e2e2ee;--muted:#8888aa;--border:rgba(255,255,255,.06);--radius:16px;
+--sep:#e67e22;--conv:#e74c3c;--trat:#2ecc71;--ref:#3498db;--iso:#9b59b6;--alq:#1abc9c;--hdc:#f39c12}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.slide{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 40px;position:relative}
+.sh{text-align:center;margin-bottom:40px;max-width:800px}
+.sh h2{font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:800;line-height:1.2;margin-bottom:12px}
+.sh p{font-size:.95rem;color:var(--muted);max-width:650px;margin:0 auto}
+.badge{display:inline-block;padding:5px 18px;border-radius:50px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;transition:transform .3s,border-color .3s}
+.card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.12)}
+.card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.card p,.card li{font-size:.88rem;color:var(--muted);line-height:1.7}
+.card ul{list-style:none;padding:0}.card li{padding:6px 0;border-bottom:1px solid var(--border)}.card li:last-child{border:none}
+.grid{display:grid;gap:20px;width:100%;max-width:1200px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.stats{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 24px;text-align:center;min-width:120px}
+.stat .sv{font-size:1.5rem;font-weight:900;margin-bottom:4px}
+.stat .sl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.hero-g{width:100%;max-width:1200px;height:180px;border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin-bottom:40px;position:relative;overflow:hidden;padding:20px}
+.hero-g h2{font-size:clamp(1.4rem,3vw,2.2rem);font-weight:900;z-index:2}
+.hero-g .badge{z-index:2}
+#title{background:linear-gradient(160deg,#080810,#1a0e05 40%,#12101e)}
+.tw{text-align:center;z-index:2;max-width:850px}
+.tw h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1;background:linear-gradient(135deg,#e67e22,#e74c3c 40%,#2ecc71 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
+.tw .sub{font-size:clamp(.9rem,2vw,1.15rem);color:var(--muted);font-weight:300;margin-bottom:30px}
+.tg{position:absolute;width:400px;height:400px;border-radius:50%;filter:blur(120px);opacity:.1;pointer-events:none}
+.inner-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:12px;font-size:.85rem;color:var(--muted);line-height:1.7}
+.inner-box strong{color:var(--text)}
+.divider{width:80px;height:3px;border-radius:2px;margin:60px auto}
+.footer{text-align:center;padding:40px 20px;color:rgba(255,255,255,.2);font-size:.8rem}
+.contexto{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;max-width:1000px;width:100%;margin-bottom:30px}
+.contexto h3{font-size:.75rem;text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:14px;color:var(--muted)}
+.contexto p{font-size:1rem;color:var(--text);line-height:1.75}
+.contexto strong{color:#fff;font-weight:700}
+.contexto .highlight{background:rgba(243,156,18,.12);border-bottom:1px solid rgba(243,156,18,.4);padding:1px 4px;border-radius:3px;color:#fff;font-weight:600}
+.preguntas-wrap{max-width:1000px;width:100%}
+.preguntas-label{text-align:center;font-size:.72rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:14px;display:flex;gap:18px;align-items:flex-start;transition:border-color .3s}
+.q-card:hover{border-color:rgba(255,255,255,.12)}
+.q-num{flex-shrink:0;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem}
+.q-card p{font-size:.95rem;color:var(--text);line-height:1.7;padding-top:6px}
+@media(max-width:700px){.slide{padding:40px 16px}.q-card{padding:18px 20px}.contexto{padding:22px 20px}}
+</style>
+</head>
+<body>
+
+<section class="slide" id="title">
+<div class="tg" style="background:var(--sep);top:-150px;right:-100px"></div>
+<div class="tg" style="background:var(--conv);bottom:-150px;left:-100px"></div>
+<div class="tg" style="background:var(--trat);bottom:50px;right:30%"></div>
+<div class="tw">
+<h1>Situaciones Operativas en Refinación</h1>
+<p class="sub">Ocho escenarios cotidianos para análisis técnico, investigación y propuesta de soluciones</p>
+<p style="color:var(--muted);font-size:.85rem">UF4 — Taller de Resolución de Problemas | Procesos Industriales 1</p>
+</div>
+</section>
+
+<section class="slide" id="intro">
+<div class="sh">
+<span class="badge" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted)">Instrucciones del Taller</span>
+<h2>Del Síntoma a la Solución</h2>
+<p>El operador de una refinería convive con anomalías diarias: pequeñas desviaciones que, mal atendidas, escalan a paros, pérdidas de producto o incidentes. Aquí 8 situaciones para abordar en equipo.</p>
+</div>
+<div class="grid g3">
+<div class="card" style="border-top:3px solid var(--ref)">
+<h3 style="color:var(--ref)">1️⃣ Investiga</h3>
+<p>Consulta bibliografía técnica, normas API, manuales de operación y casos documentados. Identifica las posibles causas raíz de la anomalía descrita.</p>
+</div>
+<div class="card" style="border-top:3px solid var(--sep)">
+<h3 style="color:var(--sep)">2️⃣ Analiza</h3>
+<p>Responde las preguntas guía. Distingue síntomas de causas. Apóyate en principios físicos, balances y experiencia operativa.</p>
+</div>
+<div class="card" style="border-top:3px solid var(--trat)">
+<h3 style="color:var(--trat)">3️⃣ Propón</h3>
+<p>Plantea <strong>al menos dos alternativas de solución</strong> argumentadas técnica y económicamente. Compara riesgos, tiempos y costos.</p>
+</div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--sep)"></div>
+
+<section class="slide" id="s1">
+<div class="hero-g" style="background:linear-gradient(135deg,#1a0e00,#2d1600 30%,#e67e22 200%)">
+<span class="badge" style="background:rgba(230,126,34,.15);border:1px solid rgba(230,126,34,.3);color:var(--sep)">Situación 1 — Destilación Atmosférica</span>
+<h2>Punto de Inflamación Fuera de Especificación en Diésel</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>En la torre atmosférica de una refinería, el producto <strong>diésel proveniente del corte lateral</strong> comienza a salir con un <span class="highlight">punto de inflamación 8 °C por debajo de la especificación</span>. El laboratorio confirma la desviación en tres muestras consecutivas. La temperatura del plato de extracción y el caudal de stripping con vapor están dentro de los rangos normales del manual operativo, pero el operador nota que la <strong>presión diferencial en la zona de despojamiento</strong> ha venido disminuyendo lentamente durante la última semana.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--sep)">−8°C</div><div class="sl">Desviación flash</div></div>
+<div class="stat"><div class="sv" style="color:var(--sep)">3</div><div class="sl">Muestras OOS</div></div>
+<div class="stat"><div class="sv" style="color:var(--sep)">↓ ΔP</div><div class="sl">Stripping</div></div>
+<div class="stat"><div class="sv" style="color:var(--sep)">7 días</div><div class="sl">Evolución</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(230,126,34,.15);color:var(--sep)">Q1</div><p>¿Qué fenómenos físicos pueden explicar que un diésel arrastre componentes ligeros (querosén/nafta) hacia el corte lateral, y cómo se relaciona esto con la presión diferencial observada?</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(230,126,34,.15);color:var(--sep)">Q2</div><p>Proponga dos alternativas de acción: una operativa inmediata y otra de intervención en parada programada. Argumente costos, riesgo y tiempo de respuesta.</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--hdc)"></div>
+
+<section class="slide" id="s2">
+<div class="hero-g" style="background:linear-gradient(135deg,#1a0a00,#2d1400 30%,#f39c12 200%)">
+<span class="badge" style="background:rgba(243,156,18,.15);border:1px solid rgba(243,156,18,.3);color:var(--hdc)">Situación 2 — Horno de Carga</span>
+<h2>Tubos con Hot Spots Localizados</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>Durante la inspección termográfica rutinaria del <strong>horno F-101</strong>, se detectan <span class="highlight">tres puntos calientes (hot spots) en tubos de la sección radiante</span>, con temperaturas de piel hasta <strong>60 °C por encima</strong> de los tubos vecinos. El operador reporta además un ligero incremento en el <strong>ΔP del paso afectado</strong>. La carga ha aumentado un <strong>5 %</strong> respecto al diseño durante el último mes para cumplir un plan de producción.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--hdc)">3</div><div class="sl">Hot spots</div></div>
+<div class="stat"><div class="sv" style="color:var(--hdc)">+60°C</div><div class="sl">Vs tubos vecinos</div></div>
+<div class="stat"><div class="sv" style="color:var(--hdc)">+5%</div><div class="sl">Sobre diseño</div></div>
+<div class="stat"><div class="sv" style="color:var(--hdc)">↑ ΔP</div><div class="sl">Paso afectado</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(243,156,18,.15);color:var(--hdc)">Q1</div><p>¿Qué mecanismos de degradación (coquización interna, mal-distribución de flujo, daño de quemadores) son consistentes con el patrón observado? Justifique con base en transferencia de calor.</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(243,156,18,.15);color:var(--hdc)">Q2</div><p>¿Qué dos estrategias permitirían recuperar la condición segura del horno sin un paro inmediato, y bajo qué criterio se decidiría finalmente parar para descoquizar?</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--conv)"></div>
+
+<section class="slide" id="s3">
+<div class="hero-g" style="background:linear-gradient(135deg,#1a0505,#300a0a 30%,#e74c3c 200%)">
+<span class="badge" style="background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.3);color:var(--conv)">Situación 3 — Equipos Rotativos</span>
+<h2>Vibración Excesiva en Bomba de Fondos</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>La bomba centrífuga <strong>P-204A</strong>, que envía residuo atmosférico caliente (340 °C) hacia la unidad de vacío, presenta un <span class="highlight">aumento súbito de vibración de 4.2 a 9.8 mm/s RMS</span> en el cojinete del lado acople. La temperatura del cojinete sube <strong>12 °C</strong>. La bomba B (respaldo) está disponible pero <strong>llevaba seis meses parada</strong>. El operador debe decidir si arranca el respaldo, sigue operando o llama a paro parcial.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--conv)">9.8</div><div class="sl">mm/s RMS</div></div>
+<div class="stat"><div class="sv" style="color:var(--conv)">+12°C</div><div class="sl">Cojinete</div></div>
+<div class="stat"><div class="sv" style="color:var(--conv)">340°C</div><div class="sl">Producto</div></div>
+<div class="stat"><div class="sv" style="color:var(--conv)">6 meses</div><div class="sl">Respaldo parado</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(231,76,60,.15);color:var(--conv)">Q1</div><p>¿Qué causas mecánicas e hidráulicas (cavitación, desalineación, daño de rodamiento, problemas de NPSH a alta temperatura) podrían generar este patrón? ¿Qué medición adicional confirmaría cada hipótesis?</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(231,76,60,.15);color:var(--conv)">Q2</div><p>Diseñe un procedimiento de transferencia segura a la bomba de respaldo considerando que está fría y lleva tiempo parada. ¿Qué riesgos térmicos y mecánicos deben mitigarse?</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--ref)"></div>
+
+<section class="slide" id="s4">
+<div class="hero-g" style="background:linear-gradient(135deg,#00131a,#001f2d 30%,#3498db 200%)">
+<span class="badge" style="background:rgba(52,152,219,.15);border:1px solid rgba(52,152,219,.3);color:var(--ref)">Situación 4 — Intercambiadores</span>
+<h2>Caída de Eficiencia en Tren de Precalentamiento</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>El <strong>tren de intercambiadores</strong> que precalienta el crudo antes del horno muestra una <span class="highlight">caída sostenida de 18 °C en la temperatura de salida</span> durante los últimos tres meses. Como compensación, el horno está quemando un <strong>9 % más de combustible</strong>. El crudo procesado cambió hace cuatro meses por una <strong>mezcla con mayor contenido de asfaltenos y sales</strong>. Las presiones diferenciales no muestran cambios significativos.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--ref)">−18°C</div><div class="sl">T salida</div></div>
+<div class="stat"><div class="sv" style="color:var(--ref)">+9%</div><div class="sl">Combustible</div></div>
+<div class="stat"><div class="sv" style="color:var(--ref)">3 meses</div><div class="sl">Evolución</div></div>
+<div class="stat"><div class="sv" style="color:var(--ref)">— ΔP</div><div class="sl">Sin cambio</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(52,152,219,.15);color:var(--ref)">Q1</div><p>¿Cómo distinguir entre ensuciamiento por asfaltenos, depósitos salinos o problemas de bypass interno usando los datos disponibles (T, P, composición)? ¿Qué cálculo de coeficiente global U aportaría evidencia?</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(52,152,219,.15);color:var(--ref)">Q2</div><p>Compare económicamente dos rutas: (a) limpieza química en línea, (b) limpieza mecánica en parada programada. Incluya consumo de combustible, lucro cesante y costo de servicio.</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--trat)"></div>
+
+<section class="slide" id="s5">
+<div class="hero-g" style="background:linear-gradient(135deg,#001a0f,#002d1a 30%,#2ecc71 200%)">
+<span class="badge" style="background:rgba(46,204,113,.15);border:1px solid rgba(46,204,113,.3);color:var(--trat)">Situación 5 — Servicios Industriales</span>
+<h2>Pérdida Parcial de Vapor de Media Presión</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>A las <strong>3:00 a. m.</strong>, la red de vapor de media presión (<strong>150 psig</strong>) cae a <strong>128 psig</strong>. Varias unidades reportan baja en el stripping y los reboilers. El cuarto de control identifica que <span class="highlight">una caldera de 200 t/h disparó por bajo nivel</span> en el domo. Las otras dos calderas elevan producción, pero la red sigue por debajo. Hay riesgo de afectar la calidad de productos y de tener que <strong>reducir carga en varias unidades</strong>.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--trat)">150→128</div><div class="sl">psig</div></div>
+<div class="stat"><div class="sv" style="color:var(--trat)">200 t/h</div><div class="sl">Caldera caída</div></div>
+<div class="stat"><div class="sv" style="color:var(--trat)">2</div><div class="sl">Calderas activas</div></div>
+<div class="stat"><div class="sv" style="color:var(--trat)">03:00</div><div class="sl">Hora evento</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(46,204,113,.15);color:var(--trat)">Q1</div><p>¿Qué jerarquía de prioridades debe seguir el coordinador de turno para decidir qué consumos de vapor recortar primero y cuáles preservar? ¿Qué criterios de seguridad y económicos aplican?</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(46,204,113,.15);color:var(--trat)">Q2</div><p>Proponga dos mejoras estructurales (instrumentación, control o redundancia) que reduzcan la probabilidad o el impacto de un evento similar en el futuro.</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--iso)"></div>
+
+<section class="slide" id="s6">
+<div class="hero-g" style="background:linear-gradient(135deg,#0e0016,#1a0030 30%,#9b59b6 200%)">
+<span class="badge" style="background:rgba(155,89,182,.15);border:1px solid rgba(155,89,182,.3);color:var(--iso)">Situación 6 — Instrumentación y Control</span>
+<h2>Lazo de Nivel Oscilante en Tambor de Reflujo</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>El <strong>tambor de reflujo</strong> de la torre debutanizadora presenta <span class="highlight">oscilaciones de nivel de ±25 %</span> con un período aproximado de <strong>4 minutos</strong>. La oscilación se transmite al flujo de tope y desestabiliza la composición del producto. El lazo de nivel fue ajustado hace <strong>dos semanas</strong> tras un cambio del transmisor diferencial de presión. Las válvulas de control aparentan responder correctamente.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--iso)">±25%</div><div class="sl">Amplitud</div></div>
+<div class="stat"><div class="sv" style="color:var(--iso)">4 min</div><div class="sl">Período</div></div>
+<div class="stat"><div class="sv" style="color:var(--iso)">2 sem</div><div class="sl">Desde cambio</div></div>
+<div class="stat"><div class="sv" style="color:var(--iso)">PID</div><div class="sl">Lazo afectado</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(155,89,182,.15);color:var(--iso)">Q1</div><p>¿Qué diferencia hay entre una oscilación causada por sintonía PID inadecuada y una causada por problemas mecánicos en la válvula (stiction, holgura)? ¿Cómo se diagnostica cada caso?</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(155,89,182,.15);color:var(--iso)">Q2</div><p>Proponga un método sistemático (por ejemplo, Ziegler-Nichols, lambda tuning, prueba escalonada) para resintonizar el lazo y justifique cuál es más apropiado para un proceso integrador como el nivel.</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--conv)"></div>
+
+<section class="slide" id="s7">
+<div class="hero-g" style="background:linear-gradient(135deg,#1a0202,#2d0606 30%,#c0392b 200%)">
+<span class="badge" style="background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.3);color:var(--conv)">Situación 7 — Seguridad de Proceso</span>
+<h2>Fuga Menor en Brida de Línea Caliente</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>Un técnico de inspección detecta <span class="highlight">una fuga pequeña tipo goteo en una brida</span> de la línea de <strong>8"</strong> que conecta el fondo de la torre con la bomba de carga a vacío. El producto está a <strong>320 °C</strong> y presión de <strong>6 bar</strong>. No hay vapor visible aún (por debajo del punto de niebla), pero existe una mancha aceitosa. La línea <strong>no tiene válvulas de bloqueo</strong> entre la torre y la bomba que permitan aislarla sin paro.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--conv)">320°C</div><div class="sl">Temperatura</div></div>
+<div class="stat"><div class="sv" style="color:var(--conv)">6 bar</div><div class="sl">Presión</div></div>
+<div class="stat"><div class="sv" style="color:var(--conv)">8"</div><div class="sl">Diámetro</div></div>
+<div class="stat"><div class="sv" style="color:var(--conv)">0</div><div class="sl">Bloqueos</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(231,76,60,.15);color:var(--conv)">Q1</div><p>¿Qué riesgos específicos (auto-ignición, escalamiento de fuga, fatiga térmica en la brida) deben evaluarse antes de decidir entre continuar operando vigilado o ir a paro de unidad?</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(231,76,60,.15);color:var(--conv)">Q2</div><p>Investigue técnicas de reparación con la línea en servicio (line-clamp, leak sealing inyectado, encapsulado) y discuta su aplicabilidad, normativa (ASME PCC-2) y limitaciones en este caso.</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--alq)"></div>
+
+<section class="slide" id="s8">
+<div class="hero-g" style="background:linear-gradient(135deg,#001a14,#002d22 30%,#1abc9c 200%)">
+<span class="badge" style="background:rgba(26,188,156,.15);border:1px solid rgba(26,188,156,.3);color:var(--alq)">Situación 8 — Tratamiento de Aguas</span>
+<h2>Hidrocarburos en Agua de Despojamiento Ácido</h2>
+</div>
+<div class="contexto">
+<h3>📍 Contexto operativo</h3>
+<p>El laboratorio reporta que el <strong>agua agria (sour water)</strong> que sale del despojador hacia la planta de tratamiento contiene <span class="highlight">contenido de hidrocarburos tres veces superior</span> al límite operativo (de <strong>50 a 160 ppm</strong>). Esto pone en riesgo la operación biológica de la PTAR y aumenta el riesgo ambiental. Las temperaturas y presiones del despojador están en rango, pero el <strong>nivel de interfase del separador previo</strong> ha estado fluctuando.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="sv" style="color:var(--alq)">160 ppm</div><div class="sl">Hidrocarburos</div></div>
+<div class="stat"><div class="sv" style="color:var(--alq)">50 ppm</div><div class="sl">Límite</div></div>
+<div class="stat"><div class="sv" style="color:var(--alq)">×3</div><div class="sl">Sobre límite</div></div>
+<div class="stat"><div class="sv" style="color:var(--alq)">Inestable</div><div class="sl">Interfase</div></div>
+</div>
+<div class="preguntas-wrap">
+<div class="preguntas-label">— Preguntas guía —</div>
+<div class="q-card"><div class="q-num" style="background:rgba(26,188,156,.15);color:var(--alq)">Q1</div><p>¿Cómo se relacionan las fluctuaciones de la interfase agua/hidrocarburo en el separador con el arrastre detectado? ¿Qué papel juegan el tiempo de residencia y la formación de emulsiones?</p></div>
+<div class="q-card"><div class="q-num" style="background:rgba(26,188,156,.15);color:var(--alq)">Q2</div><p>Proponga dos alternativas: una de control operativo del separador y otra de mejora de equipo (coalescedores, internos, control de interfase avanzado). Evalúe impacto ambiental y cumplimiento normativo colombiano.</p></div>
+</div>
+</section>
+
+<div class="divider" style="background:var(--sep)"></div>
+
+<section class="slide" id="cierre">
+<div class="sh">
+<span class="badge" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted)">Entrega del Taller</span>
+<h2>Producto Esperado por Equipo</h2>
+<p>Cada equipo entrega un documento técnico con análisis de causa raíz y propuesta de solución para la situación asignada.</p>
+</div>
+<div class="grid g3">
+<div class="card" style="border-top:3px solid var(--ref)">
+<h3 style="color:var(--ref)">📋 Análisis</h3>
+<ul><li>Descripción del problema y datos relevantes</li><li>Hipótesis de causa raíz (mínimo 2)</li><li>Argumentación con principios técnicos</li></ul>
+</div>
+<div class="card" style="border-top:3px solid var(--sep)">
+<h3 style="color:var(--sep)">🔧 Soluciones</h3>
+<ul><li>Mínimo 2 alternativas viables</li><li>Comparación técnica y económica</li><li>Recomendación final justificada</li></ul>
+</div>
+<div class="card" style="border-top:3px solid var(--trat)">
+<h3 style="color:var(--trat)">📚 Referencias</h3>
+<ul><li>Normas API / ASME / NFPA aplicables</li><li>Casos documentados similares</li><li>Manuales y literatura técnica consultada</li></ul>
+</div>
+</div>
+</section>
+
+<div class="footer">UNIPAZ — Ingeniería de Producción — Procesos Industriales 1 — 2026-1<br>UF4 — Taller de Resolución de Problemas en Unidades de Refinación</div>
+
+</body>
+</html>
